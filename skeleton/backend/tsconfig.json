@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2016",
+    "sourceMap": true,
+    "outDir": "dist",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
