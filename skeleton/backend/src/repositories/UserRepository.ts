@@ -32,7 +32,6 @@ class UserRepository extends BaseRepository {
 
     public async findOneByEmail(email: string): Promise<User|undefined> {
         const connection = await DbConnector.getConnection();
-        console.log({email});
 
         return connection.getRepository(User)
             .createQueryBuilder('user')

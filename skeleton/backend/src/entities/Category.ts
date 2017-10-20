@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 
 import Technology from './Technology';
-import { CreateCategoryRequest } from '../interfaces/CreateCategoryRequest';
+import { CreateCategoryRequest } from '../interfaces/CategoryRequests';
 
 @Entity('categories')
 export default class Category {
@@ -11,7 +11,8 @@ export default class Category {
 
     @Column({
         type: 'varchar',
-        length: 100
+        length: 100,
+        unique: true
     })
     public name: string;
 

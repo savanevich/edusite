@@ -16,27 +16,45 @@ class CategoryRepository extends BaseRepository {
     }
 
     public async save(category: Category): Promise<Category> {
-        const repository = await this.getRepository();
+        const connection = await DbConnector.getConnection();
 
-        return repository.persist(category);
-    }
-
-    public async findOneById(id: number): Promise<Category | undefined> {
-        const repository = await this.getRepository();
-
-        return repository.findOneById(id);
-    }
-
-    public async find(): Promise<Category[]> {
-        const repository = await this.getRepository();
-
-        return repository.find();
+        //noinspection TypeScriptUnresolvedFunction
+        return connection.getRepository(Category).save(category);
     }
 
     public async remove(category: Category): Promise<Category> {
-        const repository = await this.getRepository();
+        const connection = await DbConnector.getConnection();
 
-        return repository.remove(category);
+        return connection.getRepository(Category).remove(category);
+    }
+
+    public async findOneById(id: number): Promise<Category | undefined > {
+        const connection = await DbConnector.getConnection();
+
+        return connection.getRepository(Category)
+            .createQueryBuilder('category')
+            .select(['category.id', 'category.name'])
+            .where('category.id = :id', { id })
+            .getOne();
+    }
+
+    public async findOneByName(name: string): Promise<Category | undefined > {
+        const connection = await DbConnector.getConnection();
+
+        return connection.getRepository(Category)
+            .createQueryBuilder('category')
+            .select(['category.id', 'category.name'])
+            .where('category.name = :name', { name })
+            .getOne();
+    }
+
+    public async findAll(): Promise<Category[] | undefined > {
+        const connection = await DbConnector.getConnection();
+
+        return connection.getRepository(Category)
+            .createQueryBuilder('category')
+            .select(['category.id', 'category.name'])
+            .getMany();
     }
 
     private async getRepository(): Promise<Repository<Category>> {

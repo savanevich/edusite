@@ -5,3 +5,4 @@
 /skeleton/backend/logs/
 /skeleton/backend/tmp/
 /skeleton/frontend/node_modules/
+/.idea/
