@@ -6,6 +6,12 @@ import {Repository} from "typeorm";
 class UserRepository extends BaseRepository {
     private static instance: UserRepository;
 
+    private async getRepository(): Promise<Repository<User>> {
+        const connection = await DbConnector.getConnection();
+
+        return connection.getRepository(User);
+    }
+
     public static getInstance(): UserRepository {
         if (!UserRepository.instance) {
             UserRepository.instance = new UserRepository();
@@ -58,12 +64,6 @@ class UserRepository extends BaseRepository {
             .createQueryBuilder('user')
             .select(['user.id', 'user.email', 'user.name', 'user.birthday', 'user.active'])
             .getMany();
-    }
-
-    private async getRepository(): Promise<Repository<User>> {
-        const connection = await DbConnector.getConnection();
-
-        return connection.getRepository(User);
     }
 }
 

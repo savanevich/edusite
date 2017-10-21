@@ -183,7 +183,6 @@ class UserController {
      *     "data": {
      *       "user" : {
      *         "email": "john@gmail.com",
-     *         "password": "asfa12412fas24124dgssdg124",
      *         "name": "John",
      *         "birthday": "2010-10-10",
      *         "active": 1
@@ -237,7 +236,6 @@ class UserController {
      *     "data": [{
      *         "id": 1,
      *         "email": "john@gmail.com",
-     *         "password": "asfa12412fas24124dgssdg124",
      *         "name": "John",
      *         "birthday": "2010-10-10",
      *         "active": 1
@@ -245,7 +243,6 @@ class UserController {
      *     {
      *         "id": 2,
      *         "email": "marianne@gmail.com",
-     *         "password": "asfa12412fas24124dgssdg124",
      *         "name": "Marianne",
      *         "birthday": "2010-10-10",
      *         "active": 1
@@ -298,7 +295,6 @@ class UserController {
      *     "data": {
      *       "user" : {
      *         "email": "john@gmail.com",
-     *         "password": "asfa12412fas24124dgssdg124",
      *         "name": "John",
      *         "birthday": "2010-10-10",
      *         "active": 1
@@ -351,7 +347,6 @@ class UserController {
      *     "data": {
      *       "user" : {
      *         "email": "john@gmail.com",
-     *         "password": "asfa12412fas24124dgssdg124",
      *         "name": "John",
      *         "birthday": "2010-10-10",
      *         "active": 0

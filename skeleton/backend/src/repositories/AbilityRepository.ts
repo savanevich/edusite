@@ -7,6 +7,12 @@ import Category from "../entities/Category";
 class AbilityRepository extends BaseRepository {
     private static instance: AbilityRepository;
 
+    private async getRepository(): Promise<Repository<Ability>> {
+        const connection = await DbConnector.getConnection();
+
+        return connection.getRepository(Ability);
+    }
+
     public static getInstance(): AbilityRepository {
         if (!AbilityRepository.instance) {
             AbilityRepository.instance = new AbilityRepository();
@@ -69,12 +75,6 @@ class AbilityRepository extends BaseRepository {
         const repository = await this.getRepository();
 
         return repository.remove(ability);
-    }
-
-    private async getRepository(): Promise<Repository<Ability>> {
-        const connection = await DbConnector.getConnection();
-
-        return connection.getRepository(Ability);
     }
 }
 

@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 import User from './User';
-import { CreateMessageRequest } from '../interfaces/CreateMessageRequest';
+import { MessageRequest } from '../interfaces/MessageRequests';
 
 @Entity('messages')
 export default class Message {
@@ -15,18 +15,40 @@ export default class Message {
     })
     public body: string;
 
+    @Column({
+        type: 'smallint',
+        length: 1
+    })
+    public isDeleted: boolean = false;
+
+    @Column({
+        type: 'int',
+    })
+    public senderId: number;
+
+    @Column({
+        type: 'int',
+    })
+    public recipientId: number;
+
+    @CreateDateColumn()
+    public createdAt: Date;
+    @UpdateDateColumn()
+    public updatedAt: Date;
+
     @ManyToOne(type => User, user => user.sentMessages)
     public sender: User;
 
     @ManyToOne(type => User, user => user.receivedMessages)
     public recipient: User;
 
-    public static create(data: CreateMessageRequest, sender: User, recipient: User): Message {
+    public static create(data: MessageRequest, sender: User, recipient: User): Message {
         const message = new Message();
 
         message.body = data.body;
         message.sender = sender;
         message.recipient = recipient;
+        message.isDeleted = false;
 
         return message;
     }

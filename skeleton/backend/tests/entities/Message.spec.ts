@@ -4,7 +4,7 @@ import User from '../../src/entities/User';
 import Message from '../../src/entities/Message';
 
 import { CreateUserRequest } from '../../src/interfaces/UserRequests';
-import { CreateMessageRequest } from '../../src/interfaces/CreateMessageRequest';
+import { MessageRequest } from '../../src/interfaces/MessageRequests';
 
 describe('Message entity', async () => {
     const userRequest1: CreateUserRequest = {
@@ -22,7 +22,7 @@ describe('Message entity', async () => {
     let user2 = await User.create(userRequest2);
 
     it('should create method set needed properties', async () => {
-        const messageRequest: CreateMessageRequest = {
+        const messageRequest: MessageRequest = {
             body: 'Test body'
         };
         const message: Message = Message.create(messageRequest, user1, user2);
