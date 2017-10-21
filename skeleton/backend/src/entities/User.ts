@@ -11,7 +11,7 @@ import {
 
 import { config } from '../configs/global';
 import { CreateUserRequest } from '../interfaces/UserRequests';
-import Technology from './Technology';
+import Ability from './Ability';
 import Message from './Message';
 import UserFollower from './UserFollower';
 
@@ -55,8 +55,8 @@ export default class User {
 
     @UpdateDateColumn()
 
-    @ManyToMany(type => Technology, technology => technology.users)
-    public technologies: Technology[];
+    @ManyToMany(type => Ability, ability => ability.users)
+    public abilities: Ability[];
 
     @OneToMany(type => Message, message => message.sender)
     public sentMessages: Array<Message> = [];

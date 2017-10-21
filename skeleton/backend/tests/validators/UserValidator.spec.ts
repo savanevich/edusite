@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as faker from 'faker';
 
-import { validateUserCreate, validateUserLogin } from '../../src/validators/userValidator';
+import { validateUserCreate, validateUserLogin } from '../../src/validators/UserValidator';
 import { CreateUserRequest } from '../../src/interfaces/UserRequests';
 
 describe('UserValidator', () => {

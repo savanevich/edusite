@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import * as bcrypt from 'bcrypt';
 
-import { validateUserCreate, validateUserLogin } from '../validators/userValidator';
+import { validateUserCreate, validateUserLogin } from '../validators/UserValidator';
 import UserRepository from '../repositories/UserRepository';
 import DbConnector from '../utils/db/DbConnector';
 import { JsonResponse } from '../interfaces/JsonResponse';

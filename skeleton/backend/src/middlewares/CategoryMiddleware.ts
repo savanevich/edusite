@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { validateCategoryCreate } from '../validators/categoryValidator';
+import { validateCategoryCreate } from '../validators/CategoryValidator';
 import { JsonResponse } from '../interfaces/JsonResponse';
 import CategoryRepository from '../repositories/CategoryRepository';
 

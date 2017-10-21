@@ -16,22 +16,22 @@ class CategoryRepository extends BaseRepository {
     }
 
     public async save(category: Category): Promise<Category> {
-        const connection = await DbConnector.getConnection();
+        const repository = await this.getRepository();
 
         //noinspection TypeScriptUnresolvedFunction
-        return connection.getRepository(Category).save(category);
+        return repository.save(category);
     }
 
     public async remove(category: Category): Promise<Category> {
-        const connection = await DbConnector.getConnection();
+        const repository = await this.getRepository();
 
-        return connection.getRepository(Category).remove(category);
+        return repository.remove(category);
     }
 
     public async findOneById(id: number): Promise<Category | undefined > {
-        const connection = await DbConnector.getConnection();
+        const repository = await this.getRepository();
 
-        return connection.getRepository(Category)
+        return repository
             .createQueryBuilder('category')
             .select(['category.id', 'category.name'])
             .where('category.id = :id', { id })
@@ -39,9 +39,9 @@ class CategoryRepository extends BaseRepository {
     }
 
     public async findOneByName(name: string): Promise<Category | undefined > {
-        const connection = await DbConnector.getConnection();
+        const repository = await this.getRepository();
 
-        return connection.getRepository(Category)
+        return repository
             .createQueryBuilder('category')
             .select(['category.id', 'category.name'])
             .where('category.name = :name', { name })
@@ -49,9 +49,9 @@ class CategoryRepository extends BaseRepository {
     }
 
     public async findAll(): Promise<Category[] | undefined > {
-        const connection = await DbConnector.getConnection();
+        const repository = await this.getRepository();
 
-        return connection.getRepository(Category)
+        return repository
             .createQueryBuilder('category')
             .select(['category.id', 'category.name'])
             .getMany();

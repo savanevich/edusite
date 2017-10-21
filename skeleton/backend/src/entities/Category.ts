@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-import Technology from './Technology';
+import Ability from './Ability';
 import { CreateCategoryRequest } from '../interfaces/CategoryRequests';
 
 @Entity('categories')
@@ -16,8 +16,8 @@ export default class Category {
     })
     public name: string;
 
-    @ManyToMany(type => Technology, technology => technology.categories)
-    public technologies: Technology[];
+    @OneToMany(type => Ability, ability => ability.category)
+    public abilities: Ability[];
 
     public static create(data: CreateCategoryRequest): Category {
         const category = new Category();
