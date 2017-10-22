@@ -2,14 +2,14 @@ import { Router } from 'express';
 
 import UserController from '../controllers/UserController';
 import MessageController from '../controllers/MessageController';
-import { userCreateValidate, userLoginValidate, checkUserAuthentication } from '../middlewares/UserMiddleware';
+import { userCreateValidate, userLoginValidate, checkUserAuthentication, checkUserUpdate } from '../middlewares/UserMiddleware';
 import { messageCreateValidation, messageGetMiddleware, messageUpdateValidation, messageDeleteValidation } from '../middlewares/MessageMiddleware';
 
 export default (router: Router) => {
     router.post('/users/register', userCreateValidate, UserController.registerUser);
     router.post('/users/login', userLoginValidate, UserController.loginUser);
     router.get('/users/current', checkUserAuthentication, UserController.getCurrentUser);
-    router.put('/users/current', checkUserAuthentication, UserController.updateUser);
+    router.put('/users/current', checkUserAuthentication, checkUserUpdate, UserController.updateUser);
     router.delete('/users/current', checkUserAuthentication, UserController.deleteUser);
     router.get('/users/:id', UserController.getUser);
     router.get('/users', UserController.getUsers);

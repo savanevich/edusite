@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 
-import { CreateUserRequest } from '../interfaces/UserRequests';
+import {CreateUserRequest, UpdateUserRequest} from '../interfaces/UserRequests';
 
 export function validateUserCreate(data: CreateUserRequest): Joi.ValidationError {
     const schema = Joi.object().keys({
@@ -22,6 +22,18 @@ export function validateUserLogin(email: string, password: string): Joi.Validati
     });
 
     const { error } = Joi.validate({ email, password }, schema);
+
+    return error;
+}
+
+export function validateUserUpdate(data: UpdateUserRequest): Joi.ValidationError {
+    const schema = Joi.object().keys({
+        email: Joi.string().email(),
+        name: Joi.string(),
+        birthday: Joi.date().optional()
+    });
+
+    const { error } = Joi.validate(data, schema);
 
     return error;
 }

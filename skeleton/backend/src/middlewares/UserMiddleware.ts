@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import * as bcrypt from 'bcrypt';
 
-import { validateUserCreate, validateUserLogin } from '../validators/UserValidator';
+import { validateUserCreate, validateUserLogin, validateUserUpdate } from '../validators/UserValidator';
 import UserRepository from '../repositories/UserRepository';
 import DbConnector from '../utils/db/DbConnector';
 import { JsonResponse } from '../interfaces/JsonResponse';
+import { FailedJsonResponse } from '../utils/Responses';
 
 export async function checkUserAuthentication(request: Request, response, next: Function): Promise<Response | void> {
     const token = request.body.token || request.query.token || request.headers['x-access-token'];
@@ -34,7 +35,10 @@ export async function checkUserAuthentication(request: Request, response, next: 
         return response.status(403).send(jsonResponse);
     }
 
-    response.locals.user = JSON.parse(userJson);
+    let user = JSON.parse(userJson);
+    delete user.sentMessages;
+
+    response.locals.user = user;
     next();
 }
 
@@ -43,38 +47,23 @@ export async function userCreateValidate(request: Request, response: Response, n
     const validationError = validateUserCreate(data);
 
     if (validationError) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 400,
-            errors: [validationError.toString()],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(409, [validationError.toString()]);
 
-        return response.status(400).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     try {
         const user = await UserRepository.findOneByEmailOrName(data.email, data.name);
 
         if (user) {
-            const jsonResponse: JsonResponse = {
-                success: false,
-                statusCode: 409,
-                errors: ['User with this email or name already exists.'],
-                data: false
-            };
+            const failedJsonResponse = new FailedJsonResponse(409, ['User with this email or name already exists.']);
 
-            return response.status(409).send(jsonResponse);
+            return failedJsonResponse.send(response);
         }
     } catch (err) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 409,
-            errors: [err.message],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(409, [err.message]);
 
-        return response.status(409).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     next();
@@ -85,42 +74,40 @@ export async function userLoginValidate(request: Request, response: Response, ne
     const validationError = validateUserLogin(data.email, data.password);
 
     if (validationError) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 400,
-            errors: [validationError.toString()],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(409, [validationError.toString()]);
 
-        return response.status(400).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     const user = await UserRepository.findOneByEmail(data.email);
 
     if (!user) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 403,
-            errors: ['Authentication failed.'],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(403, ['Authentication failed.']);
 
-        return response.status(403).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     const isPasswordsMatch = await bcrypt.compare(data.password, user.password);
 
     if (isPasswordsMatch === false) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 403,
-            errors: ['Authentication failed.'],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(403, ['Authentication failed.']);
 
-        return response.status(403).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     response.locals.user = user;
+    next();
+}
+
+export async function checkUserUpdate(request: Request, response: Response, next: Function): Promise<any> {
+    const data = request.body;
+    const validationError = validateUserUpdate(data);
+
+    if (validationError) {
+        const failedJsonResponse = new FailedJsonResponse(409, [validationError.toString()]);
+
+        return failedJsonResponse.send(response);
+    }
+
     next();
 }
