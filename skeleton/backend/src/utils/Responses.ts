@@ -12,6 +12,10 @@ export class SuccessJsonResponse implements JsonResponse {
         this.statusCode = statusCode;
         this.data = data;
     }
+
+    public async send(response: Response): Promise<Response> {
+        return response.status(this.statusCode).send(this);
+    }
 }
 
 export class FailedJsonResponse implements JsonResponse {

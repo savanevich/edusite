@@ -4,6 +4,7 @@ import { JsonResponse } from '../interfaces/JsonResponse';
 import MessageService from '../services/MessageService';
 
 class MessageController {
+
     /**
      * @api {get} /users/:interlocutorID/messages Get messages
      * @apiName Get messages between authenticated user and an interlocutor

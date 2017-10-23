@@ -2,8 +2,16 @@ import { Router } from 'express';
 
 import UserController from '../controllers/UserController';
 import MessageController from '../controllers/MessageController';
-import { userCreateValidate, userLoginValidate, checkUserAuthentication, checkUserUpdate } from '../middlewares/UserMiddleware';
+import FollowerController from '../controllers/FollowerController';
+import {
+    userCreateValidate,
+    userLoginValidate,
+    checkUserAuthentication,
+    checkUserUpdate,
+    fetchUserFromParam
+} from '../middlewares/UserMiddleware';
 import { messageCreateValidation, messageGetMiddleware, messageUpdateValidation, messageDeleteValidation } from '../middlewares/MessageMiddleware';
+import { followerCreateValidation, followerDeleteValidation } from '../middlewares/FollowerMiddleware';
 
 export default (router: Router) => {
     router.post('/users/register', userCreateValidate, UserController.registerUser);
@@ -17,4 +25,8 @@ export default (router: Router) => {
     router.post('/users/:interlocutorID/messages', checkUserAuthentication, messageCreateValidation, MessageController.sendMessage);
     router.put('/users/:interlocutorID/messages/:messageID', checkUserAuthentication, messageUpdateValidation, MessageController.updateMessage);
     router.delete('/users/:interlocutorID/messages/:messageID', checkUserAuthentication, messageDeleteValidation, MessageController.deleteMessage);
+    router.get('/users/:userID/followers', fetchUserFromParam, FollowerController.getUserFollowers);
+    router.get('/users/:userID/following', fetchUserFromParam, FollowerController.getUserFollowing);
+    router.post('/users/:userID/follow', checkUserAuthentication, fetchUserFromParam, followerCreateValidation, FollowerController.followUser);
+    router.post('/users/:userID/unFollow', checkUserAuthentication, fetchUserFromParam, followerDeleteValidation, FollowerController.unFollowUser);
 };

@@ -4,39 +4,30 @@ import * as bcrypt from 'bcrypt';
 import { validateUserCreate, validateUserLogin, validateUserUpdate } from '../validators/UserValidator';
 import UserRepository from '../repositories/UserRepository';
 import DbConnector from '../utils/db/DbConnector';
-import { JsonResponse } from '../interfaces/JsonResponse';
 import { FailedJsonResponse } from '../utils/Responses';
 
 export async function checkUserAuthentication(request: Request, response, next: Function): Promise<Response | void> {
     const token = request.body.token || request.query.token || request.headers['x-access-token'];
 
     if (!token) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 403,
-            errors: ['No token provided.'],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(409, ['No token provided.']);
 
-        return response.status(403).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     const RDSClient = DbConnector.getRedisConnection();
     const userJson = await RDSClient.get(token);
 
     if (!userJson) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 403,
-            errors: ['Authentication failed.'],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(403, ['Authentication failed.']);
 
-        return response.status(403).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     let user = JSON.parse(userJson);
     delete user.sentMessages;
+    delete user.receivedMessages;
+    delete user.password;
 
     response.locals.user = user;
     next();
@@ -109,5 +100,19 @@ export async function checkUserUpdate(request: Request, response: Response, next
         return failedJsonResponse.send(response);
     }
 
+    next();
+}
+
+export async function fetchUserFromParam(request: Request, response: Response, next: Function): Promise<any> {
+    const id = +request.params.userID;
+    const iteratedUser = await UserRepository.findOneById(id);
+
+    if (!iteratedUser) {
+        const failedJsonResponse = new FailedJsonResponse(409, ['User with this id doesn\'t exist.']);
+
+        return failedJsonResponse.send(response);
+    }
+
+    response.locals.iteratedUser = iteratedUser;
     next();
 }

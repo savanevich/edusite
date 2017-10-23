@@ -13,7 +13,7 @@ import { config } from '../configs/global';
 import { CreateUserRequest } from '../interfaces/UserRequests';
 import Ability from './Ability';
 import Message from './Message';
-import UserFollower from './UserFollower';
+import Follower from './Follower';
 
 @Entity('users')
 export default class User {
@@ -52,23 +52,25 @@ export default class User {
     public active: boolean = true;
 
     @CreateDateColumn()
+    public createdAt: Date;
 
     @UpdateDateColumn()
+    public updatedAt: Date;
 
     @ManyToMany(type => Ability, ability => ability.users)
     public abilities: Ability[];
 
     @OneToMany(type => Message, message => message.sender)
-    public sentMessages: Array<Message> = [];
+    public sentMessages: Message[];
 
     @OneToMany(type => Message, message => message.recipient)
-    public receivedMessages: Array<Message> = [];
+    public receivedMessages: Message[];
 
-    @OneToMany(type => UserFollower, userFollower => userFollower.user)
-    public userFollowers: Array<UserFollower> = [];
+    @OneToMany(type => Follower, userFollower => userFollower.following)
+    public userFollowers: Follower[];
 
-    @OneToMany(type => UserFollower, userFollower => userFollower.follower)
-    public followingUsers: Array<UserFollower> = [];
+    @OneToMany(type => Follower, userFollower => userFollower.follower)
+    public followingUsers: Follower[];
 
     public static async create(data: CreateUserRequest): Promise<User> {
         const user: User = new User();

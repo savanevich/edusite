@@ -146,11 +146,10 @@ class UserController {
      */
     public static async getCurrentUser(request: Request, response): Promise<any> {
         try {
-            const user = await UserService.getUser(response.locals.user);
             const jsonResponse: JsonResponse = {
                 statusCode: 200,
                 success: true,
-                data: { user },
+                data: { user: response.locals.user },
                 errors: false
             };
 
