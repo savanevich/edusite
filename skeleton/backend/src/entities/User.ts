@@ -4,14 +4,13 @@ import {
     PrimaryGeneratedColumn,
     Column,
     OneToMany,
-    ManyToMany,
     CreateDateColumn,
     UpdateDateColumn
 } from 'typeorm';
 
 import { config } from '../configs/global';
 import { CreateUserRequest } from '../interfaces/UserRequests';
-import Ability from './Ability';
+import Skill from './Skill';
 import Message from './Message';
 import Follower from './Follower';
 
@@ -57,9 +56,6 @@ export default class User {
     @UpdateDateColumn()
     public updatedAt: Date;
 
-    @ManyToMany(type => Ability, ability => ability.users)
-    public abilities: Ability[];
-
     @OneToMany(type => Message, message => message.sender)
     public sentMessages: Message[];
 
@@ -71,6 +67,9 @@ export default class User {
 
     @OneToMany(type => Follower, userFollower => userFollower.follower)
     public followingUsers: Follower[];
+
+    @OneToMany(type => Skill, skill => skill.user)
+    public skills: Array<Skill> = [];
 
     public static async create(data: CreateUserRequest): Promise<User> {
         const user: User = new User();

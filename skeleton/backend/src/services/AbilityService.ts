@@ -1,7 +1,9 @@
 import AbilityRepository from '../repositories/AbilityRepository';
+import CategoryRepository from '../repositories/CategoryRepository';
 import Ability from "../entities/Ability";
 import { CreateAbilityRequest, UpdateAbilityRequest } from '../interfaces/AbilityRequests';
 import Category from "../entities/Category";
+import EntityNotFoundError from '../errors/EntityNotFoundError';
 
 class AbilityService {
 
@@ -25,6 +27,26 @@ class AbilityService {
 
     public async getAbilitiesByCategory(category: Category): Promise<Ability[] | undefined> {
         return AbilityRepository.findByCategory(category);
+    }
+
+    public async getOrCreateAbility(abilityName: string, categoryID: number): Promise<Ability> {
+        const category = await CategoryRepository.findOneById(categoryID);
+
+        if (!category) {
+            throw new EntityNotFoundError('Category with this id doesn\'t exist.');
+        }
+
+        let ability = await AbilityRepository.findOneByName(abilityName);
+
+        if (!ability) {
+            const abilityData = {
+                name: abilityName,
+                categoryID
+            };
+            ability = await this.createAbility(abilityData, category)
+        }
+
+        return ability;
     }
 
     public async createAbility(data: CreateAbilityRequest, category: Category): Promise<Ability> {

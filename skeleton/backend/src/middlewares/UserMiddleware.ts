@@ -116,3 +116,15 @@ export async function fetchUserFromParam(request: Request, response: Response, n
     response.locals.iteratedUser = iteratedUser;
     next();
 }
+
+export async function onlyAdminOrAuthenticatedUser(request: Request, response: Response, next: Function): Promise<any> {
+
+    // For now, it will only check if authenticated user is the owner of id param from the url
+    if (response.locals.user.id !== response.locals.iteratedUser.id) {
+        const failedJsonResponse = new FailedJsonResponse(409, ['You don\'t have permissions to do this action.']);
+
+        return failedJsonResponse.send(response);
+    }
+
+    next();
+}
