@@ -6,7 +6,7 @@ import MessageService from '../services/MessageService';
 class MessageController {
 
     /**
-     * @api {get} /users/:interlocutorID/messages Get messages
+     * @api {get} /users/:userID/messages Get messages
      * @apiName Get messages between authenticated user and an interlocutor
      * @apiGroup Messages
      *
@@ -44,7 +44,7 @@ class MessageController {
      */
     public static async getMessages(request: Request, response: Response): Promise<any> {
         try {
-            const messages = await MessageService.getMessages(response.locals.user, response.locals.interlocutor);
+            const messages = await MessageService.getMessages(response.locals.user, response.locals.iteratedUser);
             const jsonResponse: JsonResponse = {
                 statusCode: 200,
                 success: true,
@@ -66,7 +66,7 @@ class MessageController {
     }
 
     /**
-     * @api {post} /users/:interlocutorID/messages Send a message
+     * @api {post} /users/:userID/messages Send a message
      * @apiName messages
      * @apiGroup Messages
      *
@@ -100,7 +100,7 @@ class MessageController {
      */
     public static async sendMessage(request: Request, response: Response): Promise<any> {
         try {
-            const message = await MessageService.createMessage(request.body, response.locals.user, response.locals.interlocutor);
+            const message = await MessageService.createMessage(request.body, response.locals.user, response.locals.iteratedUser);
 
             const jsonResponse: JsonResponse = {
                 statusCode: 200,
@@ -123,7 +123,7 @@ class MessageController {
     }
 
     /**
-     * @api {put} users/:interlocutor/messages/:id Update the body of the message
+     * @api {put} users/:userID/messages/:messageID Update the body of the message
      * @apiName Update the message
      * @apiGroup Users
      *
@@ -177,7 +177,7 @@ class MessageController {
     }
 
     /**
-     * @api {delete} /messages Remove the message by id
+     * @api {delete} users/:userID/messages/:messageID Remove the message by id
      * @apiName Delete
      * @apiGroup Messages
      *
