@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { validateCategoryCreate } from '../validators/CategoryValidator';
-import { JsonResponse } from '../interfaces/JsonResponse';
+import { FailedJsonResponse } from '../utils/Responses';
 import CategoryRepository from '../repositories/CategoryRepository';
 
 export async function categoryCreateValidation(request: Request, response: Response, next: Function): Promise<Response | void> {
@@ -9,77 +9,48 @@ export async function categoryCreateValidation(request: Request, response: Respo
     const validationError = validateCategoryCreate(data);
 
     if (validationError) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 400,
-            errors: [validationError.toString()],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(500, [validationError.toString()]);
 
-        return response.status(400).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     try {
         const category = await CategoryRepository.findOneByName(data.name);
 
         if (category) {
-            const jsonResponse: JsonResponse = {
-                success: false,
-                statusCode: 409,
-                errors: ['Category with this name already exists.'],
-                data: false
-            };
+            const failedJsonResponse = new FailedJsonResponse(409, ['Category with this name already exists.']);
 
-            return response.status(409).send(jsonResponse);
+            return failedJsonResponse.send(response);
         }
     } catch (err) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 409,
-            errors: [err.message],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(409, [err.message]);
 
-        return response.status(409).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     next();
 }
 
 export async function categoryUpdateValidation(request: Request, response: Response, next: Function): Promise<Response | void> {
-    const id = +request.params.id;
-    const category = await CategoryRepository.findOneById(id);
 
-    if (!category) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 409,
-            errors: ['Category with this id doesn\'t exist.'],
-            data: false
-        };
+    try {
+        response.locals.category = await CategoryRepository.findOneById(request.params.id);
+    } catch (err) {
+        const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-        return response.status(409).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
-    response.locals.category = category;
     next();
 }
 
 export async function categoryDeleteValidation(request: Request, response: Response, next: Function): Promise<Response | void> {
-    const id = +request.params.id;
-    const category = await CategoryRepository.findOneById(id);
+    try {
+        response.locals.category = await CategoryRepository.findOneById(request.params.id);
+    } catch (err) {
+        const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-    if (!category) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 409,
-            errors: ['Category with this id doesn\'t exist.'],
-            data: false
-        };
-
-        return response.status(409).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
-
-    response.locals.category = category;
     next();
 }

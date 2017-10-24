@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { validateAbilityCreate, validateAbilityUpdate } from '../validators/AbilityValidator';
-import { JsonResponse } from '../interfaces/JsonResponse';
+import { FailedJsonResponse } from '../utils/Responses';
 import AbilityRepository from '../repositories/AbilityRepository';
 import CategoryRepository from '../repositories/CategoryRepository';
 
@@ -10,54 +10,25 @@ export async function abilityCreateValidation(request: Request, response: Respon
     const validationError = validateAbilityCreate(data);
 
     if (validationError) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 400,
-            errors: [validationError.toString()],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(500, [validationError.toString()]);
 
-        return response.status(400).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     try {
         const ability = await AbilityRepository.findOneByName(data.name);
 
         if (ability) {
-            const jsonResponse: JsonResponse = {
-                success: false,
-                statusCode: 409,
-                errors: ['Ability with this name already exists.'],
-                data: false
-            };
+            const failedJsonResponse = new FailedJsonResponse(409, ['Ability with this name already exists.']);
 
-            return response.status(409).send(jsonResponse);
+            return failedJsonResponse.send(response);
         }
 
-        const category = await CategoryRepository.findOneById(data.categoryID);
-
-        if (!category) {
-            const jsonResponse: JsonResponse = {
-                success: false,
-                statusCode: 409,
-                errors: ['Category with this id doesn\'t exist.'],
-                data: false
-            };
-
-            return response.status(409).send(jsonResponse);
-        }
-
-        response.locals.category = category;
-
+        response.locals.category = await CategoryRepository.findOneById(data.categoryID);
     } catch (err) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 409,
-            errors: [err.message],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-        return response.status(409).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     next();
@@ -68,72 +39,28 @@ export async function abilityUpdateValidation(request: Request, response: Respon
     const validationError = validateAbilityUpdate(data);
 
     if (validationError) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 400,
-            errors: [validationError.toString()],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(500, [validationError.toString()]);
 
-        return response.status(400).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     try {
-
         if (data.name) {
             const ability = await AbilityRepository.findOneByName(data.name);
 
             if (ability) {
-                const jsonResponse: JsonResponse = {
-                    success: false,
-                    statusCode: 409,
-                    errors: ['Ability with this name already exists.'],
-                    data: false
-                };
+                const failedJsonResponse = new FailedJsonResponse(409, ['Ability with this name already exists.']);
 
-                return response.status(409).send(jsonResponse);
+                return failedJsonResponse.send(response);
             }
         }
 
-        const category = await CategoryRepository.findOneById(data.categoryID);
-
-        if (!category) {
-            const jsonResponse: JsonResponse = {
-                success: false,
-                statusCode: 409,
-                errors: ['Category with this id doesn\'t exist.'],
-                data: false
-            };
-
-            return response.status(409).send(jsonResponse);
-        }
-
-        response.locals.category = category;
-
-        const abilityID = request.params.id;
-        const ability = await AbilityRepository.findOneById(abilityID);
-
-        if (!ability) {
-            const jsonResponse: JsonResponse = {
-                success: false,
-                statusCode: 409,
-                errors: ['Ability with this id doesn\'t exist.'],
-                data: false
-            };
-
-            return response.status(409).send(jsonResponse);
-        }
-
-        response.locals.ability = ability;
+        response.locals.category = await CategoryRepository.findOneById(data.categoryID);
+        response.locals.ability = await AbilityRepository.findOneById(request.params.id);
     } catch (err) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 409,
-            errors: [err.message],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-        return response.status(409).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     next();
@@ -142,33 +69,12 @@ export async function abilityUpdateValidation(request: Request, response: Respon
 export async function abilityDeleteValidation(request: Request, response: Response, next: Function): Promise<Response | void> {
 
     try {
-        const abilityID = request.params.id;
-        const ability = await AbilityRepository.findOneById(abilityID);
-
-        if (!ability) {
-            const jsonResponse: JsonResponse = {
-                success: false,
-                statusCode: 409,
-                errors: ['Ability with this id doesn\'t exist.'],
-                data: false
-            };
-
-            return response.status(409).send(jsonResponse);
-        }
-
-        response.locals.ability = ability;
+        response.locals.ability = await AbilityRepository.findOneById(request.params.id);
     } catch (err) {
-        const jsonResponse: JsonResponse = {
-            success: false,
-            statusCode: 409,
-            errors: [err.message],
-            data: false
-        };
+        const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-        return response.status(409).send(jsonResponse);
+        return failedJsonResponse.send(response);
     }
 
     next();
 }
-
-

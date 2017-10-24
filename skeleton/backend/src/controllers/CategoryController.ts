@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { JsonResponse } from '../interfaces/JsonResponse';
+import { FailedJsonResponse, SuccessJsonResponse } from '../utils/Responses';
 import CategoryService from '../services/CategoryService';
 
 class CategoryController {
@@ -38,23 +38,13 @@ class CategoryController {
         try {
             const categoryID = +request.params.id;
             const category = await CategoryService.getCategoryByID(categoryID);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { category },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { category });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -91,23 +81,13 @@ class CategoryController {
     public static async getCategories(request: Request, response: Response): Promise<any> {
         try {
             const categories = await CategoryService.getCategories();
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { categories },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { categories });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -144,23 +124,12 @@ class CategoryController {
         try {
             const category = await CategoryService.createCategory(request.body);
 
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { category },
-                errors: false
-            };
-
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { category });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -194,23 +163,13 @@ class CategoryController {
     public static async updateCategory(request: Request, response: Response): Promise<any> {
         try {
             const category = await CategoryService.updateCategory(response.locals.category, request.body);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { category },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { category });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -240,23 +199,13 @@ class CategoryController {
     public static async deleteCategory(request: Request, response: Response): Promise<any> {
         try {
             const category = await CategoryService.removeCategory(response.locals.category);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: [],
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, {});
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 }

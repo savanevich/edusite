@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import DbConnector from '../utils/db/DbConnector';
 import BaseRepository from './BaseRepository';
 import Category from '../entities/Category';
+import EntityNotFoundError from "../errors/EntityNotFoundError";
 
 class CategoryRepository extends BaseRepository {
     private static instance: CategoryRepository;
@@ -30,12 +31,17 @@ class CategoryRepository extends BaseRepository {
 
     public async findOneById(id: number): Promise<Category | undefined > {
         const repository = await this.getRepository();
-
-        return repository
+        const category = await repository
             .createQueryBuilder('category')
             .select(['category.id', 'category.name'])
             .where('category.id = :id', { id })
             .getOne();
+
+        if (!category) {
+            throw new EntityNotFoundError('Category with this id doesn\'t exist.');
+        }
+
+        return category;
     }
 
     public async findOneByName(name: string): Promise<Category | undefined > {

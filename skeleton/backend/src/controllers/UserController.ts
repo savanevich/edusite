@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { JsonResponse } from '../interfaces/JsonResponse';
+import { FailedJsonResponse, SuccessJsonResponse } from '../utils/Responses';
 import UserService from '../services/UserService';
 
 class UserController {
@@ -44,23 +44,12 @@ class UserController {
         try {
             const user = await UserService.createUser(request.body);
 
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { user },
-                errors: false
-            };
-
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { user });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -94,23 +83,13 @@ class UserController {
     public static async loginUser(request: Request, response): Promise<any> {
         try {
             const token = await UserService.loginUser(response.locals.user);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { token },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { token });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -146,23 +125,12 @@ class UserController {
      */
     public static async getCurrentUser(request: Request, response): Promise<any> {
         try {
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { user: response.locals.user },
-                errors: false
-            };
-
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { user: response.locals.user });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -201,23 +169,13 @@ class UserController {
         try {
             const userID = +request.params.id;
             const user = await UserService.getUserByID(userID);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { user },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { user });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -260,23 +218,13 @@ class UserController {
     public static async getUsers(request: Request, response: Response): Promise<any> {
         try {
             const users = await UserService.getUsers();
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { users },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { users });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -312,23 +260,13 @@ class UserController {
     public static async updateUser(request: Request, response: Response): Promise<any> {
         try {
             const user = await UserService.updateUser(response.locals.user, request.body);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { user },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { user });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -364,23 +302,13 @@ class UserController {
     public static async deleteUser(request: Request, response: Response): Promise<any> {
         try {
             const user = await UserService.setUserInactive(response.locals.user);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { user },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { user });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 }

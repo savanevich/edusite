@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { JsonResponse } from '../interfaces/JsonResponse';
+import { FailedJsonResponse, SuccessJsonResponse } from '../utils/Responses';
 import MessageService from '../services/MessageService';
 
 class MessageController {
@@ -45,23 +45,13 @@ class MessageController {
     public static async getMessages(request: Request, response: Response): Promise<any> {
         try {
             const messages = await MessageService.getMessages(response.locals.user, response.locals.iteratedUser);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { messages },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { messages });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -102,23 +92,12 @@ class MessageController {
         try {
             const message = await MessageService.createMessage(request.body, response.locals.user, response.locals.iteratedUser);
 
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { message },
-                errors: false
-            };
-
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { message });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -156,23 +135,13 @@ class MessageController {
     public static async updateMessage(request: Request, response: Response): Promise<any> {
         try {
             const message = await MessageService.updateMessage(response.locals.message, request.body);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { message },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { message });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -202,23 +171,13 @@ class MessageController {
     public static async deleteMessage(request: Request, response: Response): Promise<any> {
         try {
             const message = await MessageService.removeMessage(response.locals.message);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: [],
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, {});
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 }

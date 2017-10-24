@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { JsonResponse } from '../interfaces/JsonResponse';
+import { FailedJsonResponse, SuccessJsonResponse } from '../utils/Responses';
 import AbilityService from '../services/AbilityService';
 
 class AbilityController {
@@ -42,23 +42,13 @@ class AbilityController {
         try {
             const abilityID = +request.params.id;
             const ability = await AbilityService.getAbilityByID(abilityID);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { ability },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { ability });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -104,23 +94,13 @@ class AbilityController {
     public static async getAbilities(request: Request, response: Response): Promise<any> {
         try {
             const abilities = await AbilityService.getAbilities();
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { abilities },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { abilities });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -161,23 +141,12 @@ class AbilityController {
         try {
             const ability = await AbilityService.createAbility(request.body, response.locals.category);
 
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { ability },
-                errors: false
-            };
-
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { ability });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -214,23 +183,13 @@ class AbilityController {
     public static async updateAbility(request: Request, response: Response): Promise<any> {
         try {
             const ability = await AbilityService.updateAbility(response.locals.ability, response.locals.category, request.body);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { ability },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { ability });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -260,23 +219,13 @@ class AbilityController {
     public static async deleteAbility(request: Request, response: Response): Promise<any> {
         try {
             const ability = await AbilityService.removeAbility(response.locals.ability);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: [],
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, {});
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 
@@ -322,23 +271,13 @@ class AbilityController {
     public static async getAbilitiesByCategory(request: Request, response: Response): Promise<any> {
         try {
             const abilities = await AbilityService.getAbilitiesByCategory(response.locals.category);
-            const jsonResponse: JsonResponse = {
-                statusCode: 200,
-                success: true,
-                data: { abilities },
-                errors: false
-            };
 
-            response.json(jsonResponse);
+            const successJsonResponse = new SuccessJsonResponse(200, { abilities });
+            successJsonResponse.send(response);
         } catch (err) {
-            const jsonResponse: JsonResponse = {
-                statusCode: 500,
-                success: false,
-                data: false,
-                errors: [err.message]
-            };
+            const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
-            response.status(500).json(jsonResponse);
+            failedJsonResponse.send(response);
         }
     }
 }
