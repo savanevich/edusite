@@ -1,5 +1,5 @@
 import MessageRepository from '../repositories/MessageRepository';
-import Message from "../entities/Message";
+import Message from '../entities/Message';
 import { MessageRequest } from "../interfaces/MessageRequests";
 import User from '../entities/User';
 
