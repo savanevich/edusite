@@ -36,7 +36,7 @@ class CategoryController {
      */
     public static async getCategory(request: Request, response: Response): Promise<any> {
         try {
-            const categoryID = +request.params.id;
+            const categoryID = +request.params.categoryID;
             const category = await CategoryService.getCategoryByID(categoryID);
 
             const successJsonResponse = new SuccessJsonResponse(200, { category });

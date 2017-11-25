@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 import Ability from './Ability';
+import Article from './Article';
 import { CreateCategoryRequest } from '../interfaces/CategoryRequests';
 
 @Entity('categories')
@@ -18,6 +19,9 @@ export default class Category {
 
     @OneToMany(type => Ability, ability => ability.category)
     public abilities: Ability[];
+
+    @OneToMany(type => Article, article => article.category)
+    public articles: Article[];
 
     public static create(data: CreateCategoryRequest): Category {
         const category = new Category();

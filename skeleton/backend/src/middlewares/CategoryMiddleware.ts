@@ -34,7 +34,7 @@ export async function categoryCreateValidation(request: Request, response: Respo
 export async function categoryUpdateValidation(request: Request, response: Response, next: Function): Promise<Response | void> {
 
     try {
-        response.locals.category = await CategoryRepository.findOneById(request.params.id);
+        response.locals.category = await CategoryRepository.findOneById(request.params.categoryID);
     } catch (err) {
         const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
@@ -44,9 +44,9 @@ export async function categoryUpdateValidation(request: Request, response: Respo
     next();
 }
 
-export async function categoryDeleteValidation(request: Request, response: Response, next: Function): Promise<Response | void> {
+export async function fetchCategoryFromParam(request: Request, response: Response, next: Function): Promise<Response | void> {
     try {
-        response.locals.category = await CategoryRepository.findOneById(request.params.id);
+        response.locals.category = await CategoryRepository.findOneById(request.params.categoryID);
     } catch (err) {
         const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 

@@ -56,7 +56,6 @@ class AbilityService {
     }
 
     public async updateAbility(currentAbility: Ability, category: Category, data: UpdateAbilityRequest): Promise<Ability> {
-
         if (data.name) {
             currentAbility.name = data.name;
         }

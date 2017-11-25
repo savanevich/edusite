@@ -5,13 +5,13 @@ import { checkUserAuthentication } from '../middlewares/UserMiddleware';
 import {
     categoryCreateValidation,
     categoryUpdateValidation,
-    categoryDeleteValidation
+    fetchCategoryFromParam
 } from '../middlewares/CategoryMiddleware';
 
 export default (router: Router) => {
-    router.get('/categories/:id', CategoryController.getCategory);
+    router.get('/categories/:categoryID', CategoryController.getCategory);
     router.get('/categories', CategoryController.getCategories);
     router.post('/categories', checkUserAuthentication, categoryCreateValidation, CategoryController.addCategory);
-    router.put('/categories/:id', checkUserAuthentication, categoryUpdateValidation, CategoryController.updateCategory);
-    router.delete('/categories/:id', checkUserAuthentication, categoryDeleteValidation, CategoryController.deleteCategory);
+    router.put('/categories/:categoryID', checkUserAuthentication, categoryUpdateValidation, CategoryController.updateCategory);
+    router.delete('/categories/:categoryID', checkUserAuthentication, fetchCategoryFromParam, CategoryController.deleteCategory);
 };

@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, OneToMany } from 'typeorm';
 
-import User from './User';
 import Category from './Category';
 import Skill from './Skill';
 import { CreateAbilityRequest } from '../interfaces/AbilityRequests';
@@ -21,7 +20,7 @@ export default class Ability {
     public category: Category;
 
     @OneToMany(type => Skill, skill => skill.ability)
-    public skills: Array<Skill> = [];
+    public skills: Skill[];
 
     public static create(data: CreateAbilityRequest, category: Category): Ability {
         const ability = new Ability();

@@ -13,6 +13,7 @@ import { CreateUserRequest } from '../interfaces/UserRequests';
 import Skill from './Skill';
 import Message from './Message';
 import Follower from './Follower';
+import Article from "./Article";
 
 @Entity('users')
 export default class User {
@@ -69,7 +70,10 @@ export default class User {
     public followingUsers: Follower[];
 
     @OneToMany(type => Skill, skill => skill.user)
-    public skills: Array<Skill> = [];
+    public skills: Skill[];
+
+    @OneToMany(type => Article, article => article.user)
+    public articles: Article[];
 
     public static async create(data: CreateUserRequest): Promise<User> {
         const user: User = new User();
