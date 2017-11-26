@@ -9,7 +9,7 @@ export async function categoryCreateValidation(request: Request, response: Respo
     const validationError = validateCategoryCreate(data);
 
     if (validationError) {
-        const failedJsonResponse = new FailedJsonResponse(500, [validationError.toString()]);
+        const failedJsonResponse = new FailedJsonResponse(400, [validationError.toString()]);
 
         return failedJsonResponse.send(response);
     }
@@ -23,7 +23,7 @@ export async function categoryCreateValidation(request: Request, response: Respo
             return failedJsonResponse.send(response);
         }
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(409, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }
@@ -36,7 +36,7 @@ export async function categoryUpdateValidation(request: Request, response: Respo
     try {
         response.locals.category = await CategoryRepository.findOneById(request.params.categoryID);
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }
@@ -48,7 +48,7 @@ export async function fetchCategoryFromParam(request: Request, response: Respons
     try {
         response.locals.category = await CategoryRepository.findOneById(request.params.categoryID);
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }

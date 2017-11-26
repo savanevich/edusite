@@ -35,7 +35,7 @@ class ArticleService {
         return ArticleRepository.findByCategory(category.id);
     }
 
-    public async getArticlesByUser(user: User): Promise<User[] | undefined> {
+    public async getArticlesByUser(user: User): Promise<Article[] | undefined> {
         return ArticleRepository.findByUser(user.id);
     }
 
@@ -62,11 +62,13 @@ class ArticleService {
         return currentArticle;
     }
 
-    public async removeArticle(ability: Article) {
+    public async removeArticle(article: Article): Promise<Article> {
+        article.deleted = true;
 
-        return ArticleRepository.remove(ability);
+        await ArticleRepository.save(article);
+
+        return article;
     }
-
 }
 
 export default ArticleService.getInstance();

@@ -4,6 +4,8 @@ import Message from './Message';
 import Ability from './Ability';
 import Follower from './Follower';
 import Skill from './Skill';
+import Article from './Article';
+import Comment from './Comment';
 
 export const ENTITIES = [
     User,
@@ -11,5 +13,7 @@ export const ENTITIES = [
     Message,
     Ability,
     Follower,
-    Skill
+    Skill,
+    Article,
+    Comment
 ];

@@ -65,8 +65,8 @@ class MessageController {
      * @apiSuccess {JsonResponse} JsonResponse
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     "statusCode": "200",
+     *     HTTP/1.1 201 OK
+     *     "statusCode": "201",
      *     "success": "true",
      *     "data": {
      *       "message" : {
@@ -92,7 +92,7 @@ class MessageController {
         try {
             const message = await MessageService.createMessage(request.body, response.locals.user, response.locals.iteratedUser);
 
-            const successJsonResponse = new SuccessJsonResponse(200, { message });
+            const successJsonResponse = new SuccessJsonResponse(201, { message });
             successJsonResponse.send(response);
         } catch (err) {
             const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
@@ -153,8 +153,8 @@ class MessageController {
      * @apiSuccess {JsonResponse} JsonResponse
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     "statusCode": "200",
+     *     HTTP/1.1 202 OK
+     *     "statusCode": "202",
      *     "success": "true",
      *     "data": [],
      *     "errors": "false"
@@ -172,7 +172,7 @@ class MessageController {
         try {
             const message = await MessageService.removeMessage(response.locals.message);
 
-            const successJsonResponse = new SuccessJsonResponse(200, {});
+            const successJsonResponse = new SuccessJsonResponse(202, {});
             successJsonResponse.send(response);
         } catch (err) {
             const failedJsonResponse = new FailedJsonResponse(500, [err.message]);

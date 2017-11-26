@@ -13,7 +13,7 @@ export async function followerCreateValidation(request: Request, response: Respo
             return failedJsonResponse.send(response);
         }
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(409, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
         return failedJsonResponse.send(response);
     }
@@ -35,7 +35,7 @@ export async function followerDeleteValidation(request: Request, response: Respo
 
         response.locals.followerRelation = followerRelation;
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(409, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
 
         return failedJsonResponse.send(response);
     }

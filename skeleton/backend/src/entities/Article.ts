@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 
 import Category from './Category';
 import User from './User';
+import Comment from './Comment';
 import { CreateArticleRequest } from '../interfaces/ArticleRequests';
 
 @Entity('articles')
@@ -17,8 +18,7 @@ export default class Article {
     public title: string;
 
     @Column({
-        type: 'varchar',
-        length: 300
+        type: 'text'
     })
     public preview: string;
 
@@ -28,14 +28,22 @@ export default class Article {
     public content: string;
 
     @Column({
-        type: 'varchar'
+        type: 'varchar',
+        nullable: true
     })
     public coverUrl: string;
 
     @Column({
-        type: 'int'
+        type: 'int',
+        default: 0
     })
     public viewsCounter: number;
+
+    @Column({
+        type: 'smallint',
+        length: 1
+    })
+    public deleted: boolean = false;
 
     @CreateDateColumn()
     public createdAt: Date;
@@ -48,6 +56,9 @@ export default class Article {
 
     @ManyToOne(type => Category, category => category.articles)
     public category: Category;
+
+    @OneToMany(type => Comment, comment => comment.article)
+    public comments: Comment[];
 
     public static create(data: CreateArticleRequest, user: User, category: Category): Article {
         const article = new Article();

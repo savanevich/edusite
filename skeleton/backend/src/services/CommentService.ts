@@ -37,7 +37,7 @@ class CommentService {
     }
 
     public async removeComment(comment: Comment) {
-        comment.isDeleted = true;
+        comment.deleted = true;
 
         await CommentRepository.save(comment);
 

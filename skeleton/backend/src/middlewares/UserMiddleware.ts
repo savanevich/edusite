@@ -10,7 +10,7 @@ export async function checkUserAuthentication(request: Request, response, next: 
     const token = request.body.token || request.query.token || request.headers['x-access-token'];
 
     if (!token) {
-        const failedJsonResponse = new FailedJsonResponse(409, ['No token provided.']);
+        const failedJsonResponse = new FailedJsonResponse(401, ['No token provided.']);
 
         return failedJsonResponse.send(response);
     }
@@ -19,7 +19,7 @@ export async function checkUserAuthentication(request: Request, response, next: 
     const userJson = await RDSClient.get(token);
 
     if (!userJson) {
-        const failedJsonResponse = new FailedJsonResponse(403, ['Authentication failed.']);
+        const failedJsonResponse = new FailedJsonResponse(401, ['Authentication failed.']);
 
         return failedJsonResponse.send(response);
     }
@@ -52,7 +52,7 @@ export async function userCreateValidate(request: Request, response: Response, n
             return failedJsonResponse.send(response);
         }
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(409, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }
@@ -73,7 +73,7 @@ export async function userLoginValidate(request: Request, response: Response, ne
     const user = await UserRepository.findOneByEmail(data.email);
 
     if (!user) {
-        const failedJsonResponse = new FailedJsonResponse(403, ['Authentication failed.']);
+        const failedJsonResponse = new FailedJsonResponse(401, ['Authentication failed.']);
 
         return failedJsonResponse.send(response);
     }
@@ -81,7 +81,7 @@ export async function userLoginValidate(request: Request, response: Response, ne
     const isPasswordsMatch = await bcrypt.compare(data.password, user.password);
 
     if (isPasswordsMatch === false) {
-        const failedJsonResponse = new FailedJsonResponse(403, ['Authentication failed.']);
+        const failedJsonResponse = new FailedJsonResponse(401, ['Authentication failed.']);
 
         return failedJsonResponse.send(response);
     }
@@ -121,7 +121,7 @@ export async function onlyAdminOrAuthenticatedUser(request: Request, response: R
 
     // For now, it will only check if authenticated user is the owner of id param from the url
     if (response.locals.user.id !== response.locals.iteratedUser.id) {
-        const failedJsonResponse = new FailedJsonResponse(409, ['You don\'t have permissions to do this action.']);
+        const failedJsonResponse = new FailedJsonResponse(403, ['You don\'t have permissions to do this action.']);
 
         return failedJsonResponse.send(response);
     }

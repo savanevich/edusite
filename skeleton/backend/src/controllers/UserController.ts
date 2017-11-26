@@ -18,8 +18,8 @@ class UserController {
      * @apiSuccess {JsonResponse} JsonResponse
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     "statusCode": "200",
+     *     HTTP/1.1 201 OK
+     *     "statusCode": "201",
      *     "success": "true",
      *     "data": {
      *       "user" : {
@@ -44,7 +44,7 @@ class UserController {
         try {
             const user = await UserService.createUser(request.body);
 
-            const successJsonResponse = new SuccessJsonResponse(200, { user });
+            const successJsonResponse = new SuccessJsonResponse(201, { user });
             successJsonResponse.send(response);
         } catch (err) {
             const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
@@ -278,8 +278,8 @@ class UserController {
      * @apiSuccess {JsonResponse} JsonResponse
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     "statusCode": "200",
+     *     HTTP/1.1 202 OK
+     *     "statusCode": "202",
      *     "success": "true",
      *     "data": {
      *       "user" : {
@@ -303,7 +303,7 @@ class UserController {
         try {
             const user = await UserService.setUserInactive(response.locals.user);
 
-            const successJsonResponse = new SuccessJsonResponse(200, { user });
+            const successJsonResponse = new SuccessJsonResponse(202, { user });
             successJsonResponse.send(response);
         } catch (err) {
             const failedJsonResponse = new FailedJsonResponse(500, [err.message]);

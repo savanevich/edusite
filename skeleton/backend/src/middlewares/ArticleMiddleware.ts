@@ -25,14 +25,14 @@ export async function articleCreateValidation(request: Request, response: Respon
         const validationError = validateArticleCreate(data);
 
         if (validationError) {
-            const failedJsonResponse = new FailedJsonResponse(500, [validationError.toString()]);
+            const failedJsonResponse = new FailedJsonResponse(400, [validationError.toString()]);
 
             return failedJsonResponse.send(response);
         }
 
         response.locals.category = await CategoryRepository.findOneById(data.categoryID);
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(409, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }
@@ -46,7 +46,7 @@ export async function articleUpdateValidation(request: Request, response: Respon
         const validationError = validateArticleUpdate(data);
 
         if (validationError) {
-            const failedJsonResponse = new FailedJsonResponse(500, [validationError.toString()]);
+            const failedJsonResponse = new FailedJsonResponse(400, [validationError.toString()]);
 
             return failedJsonResponse.send(response);
         }
@@ -54,12 +54,12 @@ export async function articleUpdateValidation(request: Request, response: Respon
         response.locals.category = await CategoryRepository.findOneById(data.categoryID);
 
         if (response.locals.user.id !== response.locals.article.user.id) {
-            const failedJsonResponse = new FailedJsonResponse(409, ['You don\'t have permissions to do this action.']);
+            const failedJsonResponse = new FailedJsonResponse(403, ['You don\'t have permissions to do this action.']);
 
             return failedJsonResponse.send(response);
         }
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(409, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }
@@ -70,12 +70,12 @@ export async function articleUpdateValidation(request: Request, response: Respon
 export async function articleDeleteValidation(request: Request, response: Response, next: Function): Promise<Response | void> {
     try {
         if (response.locals.user.id !== response.locals.article.user.id) {
-            const failedJsonResponse = new FailedJsonResponse(409, ['You don\'t have permissions to do this action.']);
+            const failedJsonResponse = new FailedJsonResponse(403, ['You don\'t have permissions to do this action.']);
 
             return failedJsonResponse.send(response);
         }
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(409, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }

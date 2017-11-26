@@ -10,7 +10,7 @@ export async function abilityCreateValidation(request: Request, response: Respon
     const validationError = validateAbilityCreate(data);
 
     if (validationError) {
-        const failedJsonResponse = new FailedJsonResponse(500, [validationError.toString()]);
+        const failedJsonResponse = new FailedJsonResponse(400, [validationError.toString()]);
 
         return failedJsonResponse.send(response);
     }
@@ -26,7 +26,7 @@ export async function abilityCreateValidation(request: Request, response: Respon
 
         response.locals.category = await CategoryRepository.findOneById(data.categoryID);
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }
@@ -39,7 +39,7 @@ export async function abilityUpdateValidation(request: Request, response: Respon
     const validationError = validateAbilityUpdate(data);
 
     if (validationError) {
-        const failedJsonResponse = new FailedJsonResponse(500, [validationError.toString()]);
+        const failedJsonResponse = new FailedJsonResponse(400, [validationError.toString()]);
 
         return failedJsonResponse.send(response);
     }
@@ -58,7 +58,7 @@ export async function abilityUpdateValidation(request: Request, response: Respon
         response.locals.category = await CategoryRepository.findOneById(data.categoryID);
         response.locals.ability = await AbilityRepository.findOneById(request.params.id);
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }
@@ -71,7 +71,7 @@ export async function abilityDeleteValidation(request: Request, response: Respon
     try {
         response.locals.ability = await AbilityRepository.findOneById(request.params.id);
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }

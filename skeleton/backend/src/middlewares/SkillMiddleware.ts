@@ -10,7 +10,7 @@ export async function skillCreateValidation(request: Request, response: Response
     const validationError = validateSkill(data);
 
     if (validationError) {
-        const failedJsonResponse = new FailedJsonResponse(400, [validationError.toString()]);
+        const failedJsonResponse = new FailedJsonResponse(409, [validationError.toString()]);
 
         return failedJsonResponse.send(response);
     }
@@ -19,7 +19,7 @@ export async function skillCreateValidation(request: Request, response: Response
         response.locals.ability = await AbilityService.getOrCreateAbility(data.abilityName, request.body.categoryID);
 
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(409, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }
@@ -32,7 +32,7 @@ export async function skillUpdateValidation(request: Request, response: Response
     const validationError = validateSkill(data);
 
     if (validationError) {
-        const failedJsonResponse = new FailedJsonResponse(400, [validationError.toString()]);
+        const failedJsonResponse = new FailedJsonResponse(409, [validationError.toString()]);
 
         return failedJsonResponse.send(response);
     }
@@ -41,7 +41,7 @@ export async function skillUpdateValidation(request: Request, response: Response
         response.locals.ability = await AbilityService.getOrCreateAbility(data.abilityName, request.body.categoryID);
 
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(409, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }
@@ -54,7 +54,7 @@ export async function fetchSkillFromParam(request: Request, response: Response, 
         response.locals.skill = await SkillService.findOneByID(request.params.skillID, response.locals.iteratedUser.id);
 
     } catch (err) {
-        const failedJsonResponse = new FailedJsonResponse(409, [err.message]);
+        const failedJsonResponse = new FailedJsonResponse(404, [err.message]);
 
         return failedJsonResponse.send(response);
     }

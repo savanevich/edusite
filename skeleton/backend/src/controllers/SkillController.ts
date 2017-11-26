@@ -70,8 +70,8 @@ class SkillController {
      * @apiSuccess {JsonResponse} JsonResponse
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     "statusCode": "200",
+     *     HTTP/1.1 201 OK
+     *     "statusCode": "201",
      *     "success": "true",
      *     "data": {
      *      "skills" : [{
@@ -103,7 +103,7 @@ class SkillController {
         try {
             const skill = await SkillService.createUserSkill(request.body, response.locals.iteratedUser, response.locals.ability);
 
-            const successJsonResponse = new SuccessJsonResponse(200, { skill });
+            const successJsonResponse = new SuccessJsonResponse(201, { skill });
             successJsonResponse.send(response);
         } catch (err) {
 
@@ -169,8 +169,8 @@ class SkillController {
      * @apiSuccess {JsonResponse} JsonResponse
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     "statusCode": "200",
+     *     HTTP/1.1 202 OK
+     *     "statusCode": "202",
      *     "success": "true",
      *     "data": {
      *      "skill" : {},
@@ -189,7 +189,7 @@ class SkillController {
         try {
             const skill = await SkillService.removeUserSkill(response.locals.skill);
 
-            const successJsonResponse = new SuccessJsonResponse(200, { skill });
+            const successJsonResponse = new SuccessJsonResponse(202, { skill });
             successJsonResponse.send(response);
         } catch (err) {
 

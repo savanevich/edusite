@@ -181,8 +181,8 @@ class CategoryController {
      * @apiSuccess {JsonResponse} JsonResponse
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     "statusCode": "200",
+     *     HTTP/1.1 202 OK
+     *     "statusCode": "202",
      *     "success": "true",
      *     "data": [],
      *     "errors": "false"
@@ -200,7 +200,7 @@ class CategoryController {
         try {
             const category = await CategoryService.removeCategory(response.locals.category);
 
-            const successJsonResponse = new SuccessJsonResponse(200, {});
+            const successJsonResponse = new SuccessJsonResponse(202, {});
             successJsonResponse.send(response);
         } catch (err) {
             const failedJsonResponse = new FailedJsonResponse(500, [err.message]);

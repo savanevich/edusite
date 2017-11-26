@@ -44,7 +44,7 @@ class ArticleRepository extends BaseRepository {
             .select(ArticleRepository.SELECT_ROWS)
             .leftJoinAndSelect('article.category', 'category')
             .leftJoinAndSelect('article.user', 'user')
-            .where('article.id = :id', { id })
+            .where('article.id = :id AND article.deleted = 0', { id })
             .getOne();
 
         if (!article) {
@@ -62,6 +62,7 @@ class ArticleRepository extends BaseRepository {
             .select(ArticleRepository.SELECT_ROWS)
             .leftJoinAndSelect('article.category', 'category')
             .leftJoinAndSelect('article.user', 'user')
+            .where('article.deleted = 0')
             .getMany();
     }
 
@@ -73,7 +74,7 @@ class ArticleRepository extends BaseRepository {
             .select(ArticleRepository.SELECT_ROWS)
             .innerJoinAndSelect('article.category', 'category')
             .leftJoinAndSelect('article.user', 'user')
-            .where('article.category = :categoryID', { categoryID })
+            .where('article.category = :categoryID AND article.deleted = 0', { categoryID })
             .getMany();
     }
 
@@ -85,7 +86,7 @@ class ArticleRepository extends BaseRepository {
             .select(ArticleRepository.SELECT_ROWS)
             .innerJoinAndSelect('article.category', 'category')
             .leftJoinAndSelect('article.user', 'user')
-            .where('article.user = :userID', { userID })
+            .where('article.user = :userID AND article.deleted = 0', { userID })
             .getMany();
     }
 

@@ -20,7 +20,7 @@ export default class Comment {
         type: 'smallint',
         length: 1
     })
-    public isDeleted: boolean = false;
+    public deleted: boolean = false;
 
     @Column({
         type: 'int',
@@ -50,7 +50,7 @@ export default class Comment {
         message.body = data.body;
         message.article = article;
         message.user = user;
-        message.isDeleted = false;
+        message.deleted = false;
 
         return message;
     }

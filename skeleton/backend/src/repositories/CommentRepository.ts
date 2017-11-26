@@ -11,7 +11,7 @@ class CommentRepository extends BaseRepository {
     public static readonly SELECT_ROWS = [
         'comment.id',
         'comment.body',
-        'comment.isDeleted',
+        'comment.deleted',
         'comment.userId',
         'comment.articleId'
     ];
@@ -43,7 +43,7 @@ class CommentRepository extends BaseRepository {
         const comment = repository
             .createQueryBuilder('comment')
             .select(CommentRepository.SELECT_ROWS)
-            .where('comment.isDeleted = :isDeleted', { isDeleted: false })
+            .where('comment.deleted = :deleted', { deleted: false })
             .andWhere('comment.id = :id', { id: id })
             .getOne();
 
@@ -58,11 +58,11 @@ class CommentRepository extends BaseRepository {
         const repository = await this.getRepository();
 
         return repository
-            .createQueryBuilder('message')
+            .createQueryBuilder('comment')
             .select(CommentRepository.SELECT_ROWS)
-            .where('comment.isDeleted = :isDeleted ' +
+            .where('comment.deleted = :deleted ' +
                 'AND comment.articleId = :articleID',
-                { articleID, isDeleted: false })
+                { articleID, deleted: false })
             .getMany();
     }
 }

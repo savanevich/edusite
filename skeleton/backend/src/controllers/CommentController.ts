@@ -73,8 +73,8 @@ class CommentController {
      * @apiSuccess {JsonResponse} JsonResponse
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     "statusCode": "200",
+     *     HTTP/1.1 201 OK
+     *     "statusCode": "201",
      *     "success": "true",
      *     "data": {
      *       "article" : {
@@ -104,7 +104,7 @@ class CommentController {
         try {
             const comment = await CommentService.createComment(request.body, response.locals.user, response.locals.article);
 
-            const successJsonResponse = new SuccessJsonResponse(200, { comment });
+            const successJsonResponse = new SuccessJsonResponse(201, { comment });
             successJsonResponse.send(response);
         } catch (err) {
             const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
@@ -168,8 +168,8 @@ class CommentController {
      * @apiSuccess {JsonResponse} JsonResponse
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     "statusCode": "200",
+     *     HTTP/1.1 202 OK
+     *     "statusCode": "202",
      *     "success": "true",
      *     "data": [],
      *     "errors": "false"
@@ -187,7 +187,7 @@ class CommentController {
         try {
             const comment = await CommentService.removeComment(response.locals.comment);
 
-            const successJsonResponse = new SuccessJsonResponse(200, {});
+            const successJsonResponse = new SuccessJsonResponse(202, {});
             successJsonResponse.send(response);
         } catch (err) {
             const failedJsonResponse = new FailedJsonResponse(500, [err.message]);

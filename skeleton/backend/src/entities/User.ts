@@ -77,7 +77,7 @@ export default class User {
     public articles: Article[];
 
     @OneToMany(type => Comment, comment => comment.user)
-    private comments: Comment[];
+    public comments: Comment[];
 
     public static async create(data: CreateUserRequest): Promise<User> {
         const user: User = new User();

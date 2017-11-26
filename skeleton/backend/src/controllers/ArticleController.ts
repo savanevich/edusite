@@ -149,8 +149,8 @@ class ArticleController {
      * @apiSuccess {JsonResponse} JsonResponse
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     "statusCode": "200",
+     *     HTTP/1.1 201 OK
+     *     "statusCode": "201",
      *     "success": "true",
      *     "data": {
      *       "article" : {
@@ -188,7 +188,7 @@ class ArticleController {
         try {
             const article = await ArticleService.createArticle(request.body, response.locals.user, response.locals.category);
 
-            const successJsonResponse = new SuccessJsonResponse(200, { article });
+            const successJsonResponse = new SuccessJsonResponse(201, { article });
             successJsonResponse.send(response);
         } catch (err) {
             const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
@@ -266,8 +266,8 @@ class ArticleController {
      * @apiSuccess {JsonResponse} JsonResponse
      *
      * @apiSuccessExample Success-Response:
-     *     HTTP/1.1 200 OK
-     *     "statusCode": "200",
+     *     HTTP/1.1 202 OK
+     *     "statusCode": "202",
      *     "success": "true",
      *     "data": [],
      *     "errors": "false"
@@ -285,7 +285,7 @@ class ArticleController {
         try {
             const article = await ArticleService.removeArticle(response.locals.article);
 
-            const successJsonResponse = new SuccessJsonResponse(200, {});
+            const successJsonResponse = new SuccessJsonResponse(202, { article });
             successJsonResponse.send(response);
         } catch (err) {
             const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
