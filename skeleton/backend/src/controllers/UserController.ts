@@ -155,10 +155,13 @@ class UserController {
      *     "success": "true",
      *     "data": {
      *       "user" : {
-     *         "email": "john@gmail.com",
-     *         "name": "John",
-     *         "birthday": "2010-10-10",
      *         "active": 1
+     *         "birthday": "2010-10-10",
+     *         "email": "john@gmail.com",
+     *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
+     *         "id": 10.
+     *         "name": "John",
+     *         "userFollowers": []
      *       },
      *     "errors": "false"
      *
@@ -197,18 +200,22 @@ class UserController {
      *     "statusCode": "200",
      *     "success": "true",
      *     "data": [{
-     *         "id": 1,
-     *         "email": "john@gmail.com",
-     *         "name": "John",
-     *         "birthday": "2010-10-10",
      *         "active": 1
+     *         "birthday": "2010-10-10",
+     *         "email": "john@gmail.com",
+     *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
+     *         "id": 10.
+     *         "name": "John",
+     *         "userFollowers": []
      *     },
      *     {
-     *         "id": 2,
-     *         "email": "marianne@gmail.com",
-     *         "name": "Marianne",
+     *         "active": 2
      *         "birthday": "2010-10-10",
-     *         "active": 1
+     *         "email": "alex@gmail.com",
+     *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
+     *         "id": 11.
+     *         "name": "Alex",
+     *         "userFollowers": []
      *     }],
      *     "errors": "false"
      *
@@ -247,10 +254,13 @@ class UserController {
      *     "success": "true",
      *     "data": {
      *       "user" : {
-     *         "email": "john@gmail.com",
-     *         "name": "John",
-     *         "birthday": "2010-10-10",
      *         "active": 1
+     *         "birthday": "2010-10-10",
+     *         "email": "john@gmail.com",
+     *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
+     *         "id": 10.
+     *         "name": "John",
+     *         "userFollowers": []
      *       },
      *     "errors": "false"
      *
@@ -289,10 +299,13 @@ class UserController {
      *     "success": "true",
      *     "data": {
      *       "user" : {
-     *         "email": "john@gmail.com",
-     *         "name": "John",
-     *         "birthday": "2010-10-10",
      *         "active": 0
+     *         "birthday": "2010-10-10",
+     *         "email": "john@gmail.com",
+     *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
+     *         "id": 10.
+     *         "name": "John",
+     *         "userFollowers": []
      *       },
      *     "errors": "false"
      *

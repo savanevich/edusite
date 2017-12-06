@@ -40,7 +40,9 @@ class UserRepository extends BaseRepository {
 
         return repository
             .createQueryBuilder('user')
-            .select(['user.id', 'user.email', 'user.name', 'user.birthday', 'user.active'])
+            .select(UserRepository.SELECT_ROWS)
+            .leftJoinAndSelect('user.userFollowers', 'followers')
+            .leftJoinAndSelect('user.followingUsers', 'following')
             .where('user.id = :id', { id })
             .getOne();
     }
@@ -73,7 +75,9 @@ class UserRepository extends BaseRepository {
 
         return repository
             .createQueryBuilder('user')
-            .select(['user.id', 'user.email', 'user.name', 'user.birthday', 'user.active'])
+            .select(UserRepository.SELECT_ROWS)
+            .leftJoinAndSelect('user.userFollowers', 'followers')
+            .leftJoinAndSelect('user.followingUsers', 'following')
             .getMany();
     }
 }
