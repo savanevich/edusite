@@ -1,7 +1,7 @@
 import { createConnection, getConnectionManager, Connection } from 'typeorm';
 import 'reflect-metadata';
 
-import { ENTITIES } from '../../entities';
+import { ENTITIES } from './../../entities';
 import { config } from '../../configs/mysql';
 
 const CONNECTION_NAME: string = 'default';

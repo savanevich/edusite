@@ -44,10 +44,10 @@ export async function userCreateValidate(request: Request, response: Response, n
     }
 
     try {
-        const user = await UserRepository.findOneByEmailOrName(data.email, data.name);
+        const user = await UserRepository.findOneByEmail(data.email);
 
         if (user) {
-            const failedJsonResponse = new FailedJsonResponse(409, ['User with this email or name already exists.']);
+            const failedJsonResponse = new FailedJsonResponse(409, ['User with this email already exists.']);
 
             return failedJsonResponse.send(response);
         }
@@ -86,6 +86,7 @@ export async function userLoginValidate(request: Request, response: Response, ne
         return failedJsonResponse.send(response);
     }
 
+    delete user.password;
     response.locals.user = user;
     next();
 }

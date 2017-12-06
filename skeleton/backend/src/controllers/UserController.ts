@@ -6,14 +6,13 @@ import UserService from '../services/UserService';
 class UserController {
 
     /**
-     * @api {post} /users/register Register the user
+     * @api {post} /auth/register Register the user
      * @apiName Register
      * @apiGroup Users
      *
      * @apiParam {String} email Users unique email.
      * @apiParam {String} password Users password.
      * @apiParam {String} name Users name.
-     * @apiParam {Date} [birthday] Users birthday.
      *
      * @apiSuccess {JsonResponse} JsonResponse
      *
@@ -22,13 +21,7 @@ class UserController {
      *     "statusCode": "201",
      *     "success": "true",
      *     "data": {
-     *       "user" : {
-     *         "email": "john@gmail.com",
-     *         "name": "John",
-     *         "birthday": "2010-10-10",
-     *         "active": true,
-     *         "id": 1
-     *       },
+     *       "registered" : true,
      *     "errors": "false"
      *
      * @apiError {JsonResponse} JsonResponse
@@ -42,9 +35,9 @@ class UserController {
      */
     public static async registerUser(request: Request, response: Response): Promise<any> {
         try {
-            const user = await UserService.createUser(request.body);
+            await UserService.createUser(request.body);
 
-            const successJsonResponse = new SuccessJsonResponse(201, { user });
+            const successJsonResponse = new SuccessJsonResponse(201, { registered: true });
             successJsonResponse.send(response);
         } catch (err) {
             const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
@@ -54,7 +47,7 @@ class UserController {
     }
 
     /**
-     * @api {post} /users/login Login the user
+     * @api {post} /auth/login Login the user
      * @apiName Login
      * @apiGroup Users
      *
@@ -69,6 +62,16 @@ class UserController {
      *     "success": "true",
      *     "data": {
      *       "token" : "ksangkasngklasnk12k4nklfnsalkf",
+     *       "user" : {
+     *         "active": 1
+     *         "birthday": "2010-10-10",
+     *         "email": "john@gmail.com",
+     *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
+     *         "id": 10.
+     *         "name": "John",
+     *         "userFollowers": []
+     *       }
+     *     },
      *     "errors": "false"
      *
      * @apiError {JsonResponse} JsonResponse
@@ -84,7 +87,7 @@ class UserController {
         try {
             const token = await UserService.loginUser(response.locals.user);
 
-            const successJsonResponse = new SuccessJsonResponse(200, { token });
+            const successJsonResponse = new SuccessJsonResponse(200, { token, user: response.locals.user });
             successJsonResponse.send(response);
         } catch (err) {
             const failedJsonResponse = new FailedJsonResponse(500, [err.message]);
@@ -94,7 +97,7 @@ class UserController {
     }
 
     /**
-     * @api {get} /users/current Get the current user
+     * @api {get} /auth/current Get the current user
      * @apiName Current
      * @apiGroup Users
      *
@@ -106,12 +109,15 @@ class UserController {
      *     "success": "true",
      *     "data": {
      *       "user" : {
-     *         "email": "john@gmail.com",
-     *         "password": "asfa12412fas24124dgssdg124",
-     *         "name": "John",
-     *         "birthday": "2010-10-10",
      *         "active": 1
-     *       },
+     *         "birthday": "2010-10-10",
+     *         "email": "john@gmail.com",
+     *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
+     *         "id": 10.
+     *         "name": "John",
+     *         "userFollowers": []
+     *       }
+     *     },
      *     "errors": "false"
      *
      * @apiError {JsonResponse} JsonResponse

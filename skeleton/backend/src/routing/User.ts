@@ -16,9 +16,9 @@ import {
 } from '../middlewares/FollowerMiddleware';
 
 export default (router: Router) => {
-    router.post('/users/register', userCreateValidate, UserController.registerUser);
-    router.post('/users/login', userLoginValidate, UserController.loginUser);
-    router.get('/users/current', checkUserAuthentication, UserController.getCurrentUser);
+    router.post('/auth/register', userCreateValidate, UserController.registerUser);
+    router.post('/auth/login', userLoginValidate, UserController.loginUser);
+    router.get('/auth/current', checkUserAuthentication, UserController.getCurrentUser);
     router.put('/users/current', checkUserAuthentication, checkUserUpdate, UserController.updateUser);
     router.delete('/users/current', checkUserAuthentication, UserController.deleteUser);
     router.get('/users/:id', UserController.getUser);

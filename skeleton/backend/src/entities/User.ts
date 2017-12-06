@@ -35,8 +35,7 @@ export default class User {
 
     @Column({
         type: 'varchar',
-        length: 100,
-        unique: true
+        length: 100
     })
     public name: string;
 
