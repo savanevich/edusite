@@ -5,14 +5,14 @@ import { Headers, Http, Response } from '@angular/http';
 import { REGISTER_URL, LOGIN_URL } from './auth.constants';
 import { Registrant } from './register/registrant';
 import { Router } from '@angular/router';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable()
 
 export class AuthService {
-  userRegistered = new EventEmitter<void>();
   authErrors = new EventEmitter<string[]>();
 
-  constructor(private http: Http, private router: Router) {}
+  constructor(private http: Http, private router: Router, private notificationService: NotificationService) {}
 
   register(registrant: Registrant) {
     const headers = new Headers({'Content-type': 'application/json'});
@@ -27,7 +27,11 @@ export class AuthService {
       .subscribe(
         ((response) => {
           if (response.hasOwnProperty('success') && response.success) {
-            this.userRegistered.emit();
+
+            this.notificationService.notify(
+              'Successfully registered. Now you can login into the system using your credentials.',
+              'success'
+            );
           }
         }), ((response) => {
           this.authErrors.emit(response.json().errors);

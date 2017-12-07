@@ -14,13 +14,16 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { LoginComponent } from './modules/auth/login/login.component';
 import { AuthGuard } from './modules/auth/auth.guard';
 import { AuthedGuard } from './modules/auth/authed.guard';
+import { NotificationComponent } from './modules/notification/notification.component';
+import { NotificationService } from './modules/notification/notification.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     DashboardComponent,
-    LoginComponent
+    LoginComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,12 @@ import { AuthedGuard } from './modules/auth/authed.guard';
     HttpModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [AuthService, AuthGuard, AuthedGuard],
+  providers: [
+    AuthService,
+    AuthGuard,
+    AuthedGuard,
+    NotificationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
