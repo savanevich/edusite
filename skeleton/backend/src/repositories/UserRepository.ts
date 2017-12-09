@@ -11,7 +11,8 @@ class UserRepository extends BaseRepository {
         'user.email',
         'user.name',
         'user.birthday',
-        'user.active'
+        'user.active',
+        'user.createdAt'
     ];
 
     private async getRepository(): Promise<Repository<User>> {
@@ -52,7 +53,7 @@ class UserRepository extends BaseRepository {
 
         return repository
             .createQueryBuilder('user')
-            .select(['user.id', 'user.email', 'user.name', 'user.birthday', 'user.active', 'user.password'])
+            .select(['user.id', 'user.email', 'user.name', 'user.birthday', 'user.active', 'user.password', 'user.createdAt'])
             .leftJoinAndSelect('user.userFollowers', 'followers')
             .leftJoinAndSelect('user.followingUsers', 'following')
             .where('user.email = :email', { email })

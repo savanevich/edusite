@@ -69,7 +69,8 @@ class UserController {
      *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
      *         "id": 10.
      *         "name": "John",
-     *         "userFollowers": []
+     *         "userFollowers": [],
+     *         "createdAt": "2017-12-06T09:25:19.126Z"
      *       }
      *     },
      *     "errors": "false"
@@ -115,7 +116,8 @@ class UserController {
      *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
      *         "id": 10.
      *         "name": "John",
-     *         "userFollowers": []
+     *         "userFollowers": [],
+     *         "createdAt": "2017-12-06T09:25:19.126Z"
      *       }
      *     },
      *     "errors": "false"
@@ -161,7 +163,8 @@ class UserController {
      *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
      *         "id": 10.
      *         "name": "John",
-     *         "userFollowers": []
+     *         "userFollowers": [],
+     *         "createdAt": "2017-12-06T09:25:19.126Z"
      *       },
      *     "errors": "false"
      *
@@ -206,7 +209,8 @@ class UserController {
      *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
      *         "id": 10.
      *         "name": "John",
-     *         "userFollowers": []
+     *         "userFollowers": [],
+     *         "createdAt": "2017-12-06T09:25:19.126Z"
      *     },
      *     {
      *         "active": 2
@@ -215,7 +219,8 @@ class UserController {
      *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
      *         "id": 11.
      *         "name": "Alex",
-     *         "userFollowers": []
+     *         "userFollowers": [],
+     *         "createdAt": "2017-12-06T09:25:19.126Z"
      *     }],
      *     "errors": "false"
      *
@@ -260,7 +265,8 @@ class UserController {
      *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
      *         "id": 10.
      *         "name": "John",
-     *         "userFollowers": []
+     *         "userFollowers": [],
+     *         "createdAt": "2017-12-06T09:25:19.126Z"
      *       },
      *     "errors": "false"
      *
@@ -305,7 +311,8 @@ class UserController {
      *         "followingUsers": [{id: 4}, {id: 5}, {id: 6}],
      *         "id": 10.
      *         "name": "John",
-     *         "userFollowers": []
+     *         "userFollowers": [],
+     *         "createdAt": "2017-12-06T09:25:19.126Z"
      *       },
      *     "errors": "false"
      *

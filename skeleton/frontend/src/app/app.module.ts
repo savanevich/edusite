@@ -16,6 +16,8 @@ import { AuthGuard } from './modules/auth/auth.guard';
 import { AuthedGuard } from './modules/auth/authed.guard';
 import { NotificationComponent } from './modules/notification/notification.component';
 import { NotificationService } from './modules/notification/notification.service';
+import { ProfileComponent } from './modules/user/profile/profile.component';
+import { UserService } from './modules/user/user.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { NotificationService } from './modules/notification/notification.service
     RegisterComponent,
     DashboardComponent,
     LoginComponent,
-    NotificationComponent
+    NotificationComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import { NotificationService } from './modules/notification/notification.service
     AuthService,
     AuthGuard,
     AuthedGuard,
-    NotificationService
+    NotificationService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
