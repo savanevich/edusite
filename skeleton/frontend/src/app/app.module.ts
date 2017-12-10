@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 
 import { NgProgressModule } from 'ngx-progressbar';
 
-import { ROUTES } from './routes/routes';
+import { ROUTES } from './routes';
 
 import { AuthService } from './modules/auth/auth.service';
 import { UserService } from './modules/user/user.service';
@@ -21,6 +21,8 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { LoginComponent } from './modules/auth/login/login.component';
 import { NotificationComponent } from './modules/notification/notification.component';
 import { ProfileComponent } from './modules/user/profile/profile.component';
+import { WallComponent } from './modules/user/profile/wall/wall.component';
+import { EditProfileComponent } from './modules/user/profile/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { ProfileComponent } from './modules/user/profile/profile.component';
     DashboardComponent,
     LoginComponent,
     NotificationComponent,
-    ProfileComponent
+    ProfileComponent,
+    WallComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

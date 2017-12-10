@@ -12,8 +12,8 @@
         Joined Date: {{ user.createdAt | date:'longDate' }}
       </p>
       <br>
-      <p class="text-center">
-        <a class="btn btn-info">Edit your profile</a>
+      <p class="text-center" *ngIf="isAuthUserProfile()">
+        <a class="btn btn-info" routerLink="edit">Edit your profile</a>
       </p>
     </div>
   </div>
@@ -24,4 +24,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="col-lg-8">
+  <router-outlet></router-outlet>
 </div>

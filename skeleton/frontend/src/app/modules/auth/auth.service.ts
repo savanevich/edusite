@@ -3,7 +3,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { NgProgress } from 'ngx-progressbar';
 
-import { REGISTER_URL, LOGIN_URL, FETCH_AUTH_USER } from './auth.constants';
+import { REGISTER_URL, LOGIN_URL, FETCH_AUTH_USER, UPDATE_AUTH_USER } from './auth.constants';
 import { Registrant } from './register/registrant';
 import { Router } from '@angular/router';
 import { NotificationService } from '../notification/notification.service';
@@ -14,6 +14,7 @@ import { User} from '../user/user';
 export class AuthService {
   private authHeaders: Headers;
 
+  public authSuccess = new EventEmitter<User>();
   public authErrors = new EventEmitter<string[]>();
   public authenticatedUser: User = null;
 
@@ -21,7 +22,7 @@ export class AuthService {
     private http: Http,
     private router: Router,
     private notificationService: NotificationService,
-    public progress: NgProgress
+    private progress: NgProgress
   ) {
     this.authHeaders = new Headers({
       'Content-Type': 'application/json',
@@ -85,6 +86,7 @@ export class AuthService {
             localStorage.setItem('token', response.data.token);
             this.authenticatedUser = response.data.user;
 
+            this.authSuccess.emit(this.authenticatedUser);
             this.router.navigate(['/dashboard']);
           }
         }), ((response) => {
@@ -104,10 +106,39 @@ export class AuthService {
         ((response) => {
         if (response.hasOwnProperty('success') && response.success) {
           this.authenticatedUser = response.data.user;
+          this.authSuccess.emit(this.authenticatedUser);
         }
       }), (() => {
           this.logOut();
       }));
+  }
+
+  updateAuthenticatedUser(name: string, email: string) {
+    const options = new RequestOptions({ headers: this.authHeaders });
+    this.progress.start();
+
+    return this.http.put(UPDATE_AUTH_USER, { name: name, email: email }, options)
+      .map((response: Response) => response.json())
+      .subscribe(
+        ((response) => {
+          if (response.hasOwnProperty('success') && response.success) {
+            this.authenticatedUser = response.data.user;
+            this.authSuccess.emit(this.authenticatedUser);
+
+            this.notificationService.notify(
+              'Profile successfully updated!',
+              'success'
+            );
+          }
+        }), ((response) => {
+          this.notificationService.notify(
+            response.json().errors[0],
+            'error'
+          );
+        }), (() => {
+          this.progress.done();
+        })
+      );
   }
 
   isLoggedIn(): boolean {

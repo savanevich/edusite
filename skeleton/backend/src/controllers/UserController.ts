@@ -251,6 +251,9 @@ class UserController {
      * @apiName Update
      * @apiGroup Users
      *
+     * @apiParam {String} email Users unique email.
+     * @apiParam {String} name Users name.
+     *
      * @apiSuccess {JsonResponse} JsonResponse
      *
      * @apiSuccessExample Success-Response:
@@ -281,7 +284,8 @@ class UserController {
      */
     public static async updateUser(request: Request, response: Response): Promise<any> {
         try {
-            const user = await UserService.updateUser(response.locals.user, request.body);
+            const token = request.body.token || request.query.token || request.headers['x-access-token'];
+            const user = await UserService.updateUser(response.locals.user, request.body, token);
 
             const successJsonResponse = new SuccessJsonResponse(200, { user });
             successJsonResponse.send(response);

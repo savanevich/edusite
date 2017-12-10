@@ -56,7 +56,7 @@ class UserService {
         });
     }
 
-    public async updateUser(currentUser: User, data: UpdateUserRequest): Promise<User> {
+    public async updateUser(currentUser: User, data: UpdateUserRequest, token: string): Promise<User> {
 
         if (data.name) {
             currentUser.name = data.name;
@@ -69,6 +69,9 @@ class UserService {
         }
 
         await UserRepository.save(currentUser);
+        const client = DbConnector.getRedisConnection();
+
+        await client.set(token, JSON.stringify(currentUser));
 
         return currentUser;
     }

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../user.service';
 import { User } from '../user';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,11 @@ export class ProfileComponent implements OnInit {
   public userId: number;
   public user: User = null;
 
-  constructor(private router: ActivatedRoute, private userService: UserService) { }
+  constructor(
+    private router: ActivatedRoute,
+    private userService: UserService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
     this.router.params.subscribe((params) => this.userId = +params['id'] );
@@ -24,6 +29,18 @@ export class ProfileComponent implements OnInit {
       (user: User) => {
         this.user = user;
       }
-    )
+    );
+
+    this.authService.authSuccess.subscribe(
+      (user: User) => {
+        if (user.id === this.userId) {
+          this.user = user;
+        }
+      }
+    );
+  }
+
+  isAuthUserProfile(): boolean {
+    return this.userId === this.authService.getAuthUserId();
   }
 }
