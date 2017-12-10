@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/map';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
+import { NgProgress } from 'ngx-progressbar';
 
 import { REGISTER_URL, LOGIN_URL, FETCH_AUTH_USER } from './auth.constants';
 import { Registrant } from './register/registrant';
@@ -16,7 +17,12 @@ export class AuthService {
   public authErrors = new EventEmitter<string[]>();
   public authenticatedUser: User = null;
 
-  constructor(private http: Http, private router: Router, private notificationService: NotificationService) {
+  constructor(
+    private http: Http,
+    private router: Router,
+    private notificationService: NotificationService,
+    public progress: NgProgress
+  ) {
     this.authHeaders = new Headers({
       'Content-Type': 'application/json',
       'x-access-token': this.getAuthToken()
@@ -46,6 +52,7 @@ export class AuthService {
       email: registrant.email,
       password: registrant.password
     };
+    this.progress.start();
 
     return this.http.post(REGISTER_URL, body, headers)
       .map((response: Response) => response.json())
@@ -60,12 +67,15 @@ export class AuthService {
           }
         }), ((response) => {
           this.authErrors.emit(response.json().errors);
+        }), (() => {
+          this.progress.done();
         })
       );
   }
 
   login(email: string, password: string) {
     const headers = new Headers({'Content-type': 'application/json'});
+    this.progress.start();
 
     return this.http.post(LOGIN_URL, { email: email, password: password }, headers)
       .map((response: Response) => response.json())
@@ -79,6 +89,8 @@ export class AuthService {
           }
         }), ((response) => {
           this.authErrors.emit(response.json().errors);
+        }), (() => {
+          this.progress.done();
         })
       );
   }

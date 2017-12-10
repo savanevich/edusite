@@ -4,20 +4,23 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { NgProgressModule } from 'ngx-progressbar';
+
 import { ROUTES } from './routes/routes';
 
 import { AuthService } from './modules/auth/auth.service';
+import { UserService } from './modules/user/user.service';
+import { NotificationService } from './modules/notification/notification.service';
+
+import { AuthGuard } from './modules/auth/auth.guard';
+import { AuthedGuard } from './modules/auth/authed.guard';
 
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './modules/auth/register/register.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { LoginComponent } from './modules/auth/login/login.component';
-import { AuthGuard } from './modules/auth/auth.guard';
-import { AuthedGuard } from './modules/auth/authed.guard';
 import { NotificationComponent } from './modules/notification/notification.component';
-import { NotificationService } from './modules/notification/notification.service';
 import { ProfileComponent } from './modules/user/profile/profile.component';
-import { UserService } from './modules/user/user.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { UserService } from './modules/user/user.service';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    NgProgressModule
   ],
   providers: [
     AuthService,
