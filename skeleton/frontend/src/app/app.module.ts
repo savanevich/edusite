@@ -23,6 +23,8 @@ import { NotificationComponent } from './modules/notification/notification.compo
 import { ProfileComponent } from './modules/user/profile/profile.component';
 import { WallComponent } from './modules/user/profile/wall/wall.component';
 import { EditProfileComponent } from './modules/user/profile/edit/edit.component';
+import { FollowComponent } from './modules/user/profile/follow/follow.component';
+import { FollowService } from './modules/user/profile/follow/follow.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { EditProfileComponent } from './modules/user/profile/edit/edit.component
     NotificationComponent,
     ProfileComponent,
     WallComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    FollowComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,7 @@ import { EditProfileComponent } from './modules/user/profile/edit/edit.component
     AuthService,
     AuthGuard,
     AuthedGuard,
+    FollowService,
     NotificationService,
     UserService
   ],

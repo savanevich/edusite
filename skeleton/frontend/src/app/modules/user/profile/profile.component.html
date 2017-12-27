@@ -17,12 +17,8 @@
       </p>
     </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <div class="text-center">
-        <a class="btn btn-default">Follow</a>
-      </div>
-    </div>
+  <div *ngIf="!isAuthUserProfile()">
+    <app-follow [currentProfileId]="userId"></app-follow>
   </div>
 </div>
 

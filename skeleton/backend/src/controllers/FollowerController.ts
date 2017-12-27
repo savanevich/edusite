@@ -162,6 +162,7 @@ class FollowerController {
      */
     public static async unFollowUser(request: Request, response: Response): Promise<any> {
         try {
+            const token = request.body.token || request.query.token || request.headers['x-access-token'];
             const followRelation = await FollowerService.unFollowUser(response.locals.followerRelation);
 
             const successJsonResponse = new SuccessJsonResponse(202, { followRelation });

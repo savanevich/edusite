@@ -13,7 +13,7 @@ import { AuthService } from '../../auth/auth.service';
 export class ProfileComponent implements OnInit {
 
   public userId: number;
-  public user: User = null;
+  public user: User;
 
   constructor(
     private router: ActivatedRoute,
@@ -22,11 +22,13 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.router.params.subscribe((params) => this.userId = +params['id'] );
+    this.router.params.subscribe((params) => this.userId = +params['id']);
 
     this.userService.fetchUser(this.userId);
     this.userService.userChanged.subscribe(
       (user: User) => {
+        console.log('UserService');
+        console.log(user);
         this.user = user;
       }
     );
@@ -34,6 +36,8 @@ export class ProfileComponent implements OnInit {
     this.authService.authSuccess.subscribe(
       (user: User) => {
         if (user.id === this.userId) {
+          console.log('authSuccess');
+          console.log(user);
           this.user = user;
         }
       }
