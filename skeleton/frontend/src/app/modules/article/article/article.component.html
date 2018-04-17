@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span>{{ article.title }}</span>
+    <span class="pull-right"><a [routerLink]="['/users/profile', article.user.id]">{{ article.user.name }}</a></span>
+  </div>
+  <div class="panel-body">
+    <p class="text-center">
+      {{ article.preview }}
+    </p>
+    <p class="text-center">
+      {{ article.content }}
+    </p>
+  </div>
+  <div class="panel-footer">
+    {{ article.createdAt | date:'longDate'}}
+  </div>
+</div>

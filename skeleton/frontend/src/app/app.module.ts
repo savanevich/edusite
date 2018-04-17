@@ -28,10 +28,12 @@ import { FollowService } from './modules/user/profile/follow/follow.service';
 import { CreateArticleComponent } from './modules/article/create-article/create-article.component';
 import { ArticleService } from './modules/article/article.service';
 import { CategoryService } from './modules/category/category.service';
+import { ArticleComponent } from './modules/article/article/article.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ArticleComponent,
     CreateArticleComponent,
     DashboardComponent,
     EditProfileComponent,

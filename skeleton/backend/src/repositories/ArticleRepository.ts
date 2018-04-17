@@ -14,6 +14,7 @@ class ArticleRepository extends BaseRepository {
         'article.content',
         'article.coverUrl',
         'article.viewsCounter',
+        'article.createdAt',
     ];
 
     private async getRepository(): Promise<Repository<Article>> {

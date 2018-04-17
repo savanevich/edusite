@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../../user.service';
-import {Article} from "../../../article/article";
+import { Article } from '../../../article/article';
 
 @Component({
   selector: 'app-wall',
