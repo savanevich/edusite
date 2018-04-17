@@ -22,12 +22,11 @@ export class FollowComponent implements OnInit {
     this.authenticatedUser = this.authService.getAuthUser();
     this.authService.authSuccess.subscribe((user: User) => {
       this.authenticatedUser = user;
-      console.log(this.authenticatedUser);
     });
   }
 
   isFollowing(): boolean {
-    return this.authenticatedUser.followingUsers.some((follower) => {
+    return this.authenticatedUser && this.authenticatedUser.followingUsers.some((follower) => {
       return +follower.id === this.currentProfileId;
     });
   }

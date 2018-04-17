@@ -22,9 +22,11 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.router.params.subscribe((params) => this.userId = +params['id']);
+    this.router.params.subscribe((params) => {
+      this.userId = +params['id'];
+      this.userService.fetchUser(this.userId);
+    });
 
-    this.userService.fetchUser(this.userId);
     this.userService.userChanged.subscribe(
       (user: User) => {
         this.user = user;
@@ -38,6 +40,8 @@ export class ProfileComponent implements OnInit {
         }
       }
     );
+
+    this.user = this.userService.getUser();
   }
 
   isAuthUserProfile(): boolean {

@@ -1,3 +1,18 @@
-<p>
-  wall works!
-</p>
+<div *ngIf="userArticles.length > 0">
+  <div class="panel panel-default" *ngFor="let article of userArticles">
+    <div class="panel-heading">
+      {{ article.title }}
+    </div>
+    <div class="panel-body">
+      <p class="text-center">
+        {{ article.preview }}
+      </p>
+      <p class="text-center">
+        {{ article.content }}
+      </p>
+    </div>
+  </div>
+</div>
+<div *ngIf="userArticles.length < 1">
+  No articles yet
+</div>

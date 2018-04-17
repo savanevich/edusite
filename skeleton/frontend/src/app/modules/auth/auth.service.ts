@@ -10,7 +10,6 @@ import { NotificationService } from '../notification/notification.service';
 import { User} from '../user/user';
 
 @Injectable()
-
 export class AuthService {
   private authHeaders: Headers;
 

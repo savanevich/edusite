@@ -62,5 +62,6 @@ export class CreateArticleComponent implements OnInit {
 
   onSubmit() {
     this.articleService.createArticle(this.articleForm.value);
+    this.articleForm.reset();
   }
 }
