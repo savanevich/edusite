@@ -2,6 +2,8 @@ version: '3'
 services:
   web:
     build: .
+    ports:
+      - "8000:3000"
     volumes:
       - .:/usr/src/app
       - log_volume:/usr/src/app/logs
@@ -25,7 +27,7 @@ services:
     image: mysql:latest
     ports:
       - "3306:3306"
-    environment: 
+    environment:
       MYSQL_ROOT_PASSWORD : root
       MYSQL_DATABASE: developers
     volumes:
@@ -37,24 +39,6 @@ services:
       - "27017:27017"
     volumes:
       - mongo_volume:/data/db
-
-  nginx-proxy:
-    image: jwilder/nginx-proxy:latest
-    labels:
-        com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-
-  nginx-static:
-    image: nginx:latest
-    container_name: nginx-static
-    environment:
-      - VIRTUAL_HOST=developers.dev
-    volumes:
-      - ./static-files/:/usr/share/nginx/html
 
 volumes:
   log_volume: {}

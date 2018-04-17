@@ -27,8 +27,6 @@ export class ProfileComponent implements OnInit {
     this.userService.fetchUser(this.userId);
     this.userService.userChanged.subscribe(
       (user: User) => {
-        console.log('UserService');
-        console.log(user);
         this.user = user;
       }
     );
@@ -36,8 +34,6 @@ export class ProfileComponent implements OnInit {
     this.authService.authSuccess.subscribe(
       (user: User) => {
         if (user.id === this.userId) {
-          console.log('authSuccess');
-          console.log(user);
           this.user = user;
         }
       }

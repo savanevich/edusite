@@ -6,6 +6,7 @@ import { AuthedGuard } from './modules/auth/authed.guard';
 import { ProfileComponent } from './modules/user/profile/profile.component';
 import { WallComponent } from './modules/user/profile/wall/wall.component';
 import { EditProfileComponent } from './modules/user/profile/edit/edit.component';
+import { CreateArticleComponent } from './modules/article/create-article/create-article.component';
 
 export const ROUTES = [
   { path: 'auth/register', component: RegisterComponent, canActivate: [AuthedGuard] },
@@ -14,4 +15,5 @@ export const ROUTES = [
   { path: 'users/profile/:id', component: ProfileComponent, canActivate: [AuthGuard], children: [
     { path: '', component: WallComponent }, { path: 'edit', component: EditProfileComponent }
   ]},
+  { path: 'create/article', component: CreateArticleComponent }
 ];

@@ -25,18 +25,22 @@ import { WallComponent } from './modules/user/profile/wall/wall.component';
 import { EditProfileComponent } from './modules/user/profile/edit/edit.component';
 import { FollowComponent } from './modules/user/profile/follow/follow.component';
 import { FollowService } from './modules/user/profile/follow/follow.service';
+import { CreateArticleComponent } from './modules/article/create-article/create-article.component';
+import { ArticleService } from './modules/article/article.service';
+import { CategoryService } from './modules/category/category.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent,
+    CreateArticleComponent,
     DashboardComponent,
+    EditProfileComponent,
+    FollowComponent,
     LoginComponent,
     NotificationComponent,
     ProfileComponent,
-    WallComponent,
-    EditProfileComponent,
-    FollowComponent
+    RegisterComponent,
+    WallComponent
   ],
   imports: [
     BrowserModule,
@@ -47,9 +51,11 @@ import { FollowService } from './modules/user/profile/follow/follow.service';
     NgProgressModule
   ],
   providers: [
+    ArticleService,
     AuthService,
     AuthGuard,
     AuthedGuard,
+    CategoryService,
     FollowService,
     NotificationService,
     UserService

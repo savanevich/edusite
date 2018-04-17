@@ -57,6 +57,7 @@ export class AuthService {
 
     return this.http.post(REGISTER_URL, body, headers)
       .map((response: Response) => response.json())
+      .finally(() => this.progress.done())
       .subscribe(
         ((response) => {
           if (response.hasOwnProperty('success') && response.success) {
@@ -68,8 +69,6 @@ export class AuthService {
           }
         }), ((response) => {
           this.authErrors.emit(response.json().errors);
-        }), (() => {
-          this.progress.done();
         })
       );
   }
@@ -80,6 +79,7 @@ export class AuthService {
 
     return this.http.post(LOGIN_URL, { email: email, password: password }, headers)
       .map((response: Response) => response.json())
+      .finally(() => this.progress.done())
       .subscribe(
         ((response) => {
           if (response.hasOwnProperty('success') && response.success) {
@@ -91,8 +91,6 @@ export class AuthService {
           }
         }), ((response) => {
           this.authErrors.emit(response.json().errors);
-        }), (() => {
-          this.progress.done();
         })
       );
   }
@@ -119,6 +117,7 @@ export class AuthService {
 
     return this.http.put(UPDATE_AUTH_USER, { name: name, email: email }, options)
       .map((response: Response) => response.json())
+      .finally(() => this.progress.done())
       .subscribe(
         ((response) => {
           if (response.hasOwnProperty('success') && response.success) {
@@ -135,8 +134,6 @@ export class AuthService {
             response.json().errors[0],
             'error'
           );
-        }), (() => {
-          this.progress.done();
         })
       );
   }

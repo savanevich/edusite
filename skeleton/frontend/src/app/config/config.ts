@@ -1,3 +1,3 @@
 export const CONFIG = {
-  API_URL: 'http://api.developers.dev'
+  API_URL: 'http://localhost:8000'
 };
