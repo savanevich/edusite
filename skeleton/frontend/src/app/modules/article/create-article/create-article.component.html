@@ -2,7 +2,8 @@
   <div class="col-md-8 col-md-offset-1">
     <div class="panel panel-default">
       <div class="panel-heading">
-        Create article
+        <span *ngIf="isNew">Create article</span>
+        <span *ngIf="!isNew">Update article</span>
       </div>
       <div class="panel-body">
         <form [formGroup]="articleForm" (ngSubmit)="onSubmit()">
@@ -49,7 +50,8 @@
           </div>
           <div class="form-group text-center">
             <button class="btn btn-info" [disabled]="articleForm.invalid">
-              Create Article
+              <span *ngIf="isNew">Create Article</span>
+              <span *ngIf="!isNew">Update Article</span>
             </button>
           </div>
         </form>

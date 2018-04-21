@@ -1,3 +1,6 @@
+import { User } from '../user/user';
+import { Category } from "../category/category";
+
 export class Article {
   constructor(
     public id: number,
@@ -5,7 +8,9 @@ export class Article {
     public preview: string,
     public content: string,
     public categoryID: number,
-    public coverUrl?: number
+    public coverUrl?: number,
+    public user?: User,
+    public category?: Category
   ) {
   }
 }

@@ -1,5 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Article} from "../article";
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { Article } from '../article';
+import { AuthService } from '../../auth/auth.service';
+import { User } from '../../user/user';
 
 @Component({
   selector: 'app-article',
@@ -9,9 +13,29 @@ import {Article} from "../article";
 export class ArticleComponent implements OnInit {
   @Input() article: Article;
 
-  constructor() { }
+  public authenticatedUser: User;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    this.authenticatedUser = this.authService.getAuthUser();
+    this.authService.authSuccess.subscribe((user: User) => {
+      this.authenticatedUser = user;
+    });
   }
 
+  isArticleCanBeModified() {
+    return this.article && this.authenticatedUser && this.article.user.id === this.authService.getAuthUserId();
+  }
+
+  onEdit() {
+    this.router.navigate(['/article/', this.article.id, 'edit'])
+  }
+
+  onDelete() {
+
+  }
 }
