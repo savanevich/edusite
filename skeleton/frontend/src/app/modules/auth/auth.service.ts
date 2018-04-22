@@ -54,7 +54,7 @@ export class AuthService {
     };
     this.progress.start();
 
-    return this.http.post(REGISTER_URL, body, headers)
+    return this.http.post(REGISTER_URL, body, new RequestOptions({ headers }))
       .map((response: Response) => response.json())
       .finally(() => this.progress.done())
       .subscribe(
@@ -76,7 +76,7 @@ export class AuthService {
     const headers = new Headers({'Content-type': 'application/json'});
     this.progress.start();
 
-    return this.http.post(LOGIN_URL, { email: email, password: password }, headers)
+    return this.http.post(LOGIN_URL, { email: email, password: password }, new RequestOptions({ headers }))
       .map((response: Response) => response.json())
       .finally(() => this.progress.done())
       .subscribe(

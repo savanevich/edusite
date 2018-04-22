@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { UserService } from '../../user.service';
 import { Article } from '../../../article/article';
+import { ArticleService } from '../../../article/article.service';
 
 @Component({
   selector: 'app-wall',
@@ -16,20 +16,20 @@ export class WallComponent implements OnInit {
 
   constructor(
     private router: ActivatedRoute,
-    private userService: UserService,
+    private articleService: ArticleService,
   ) { }
 
   ngOnInit() {
     this.router.params.subscribe((params) => {
       this.userId = +params['id'];
-      this.userService.fetchUserArticles(this.userId.toString());
+      this.articleService.fetchUserArticles(this.userId.toString());
     });
 
-    this.userService.userArticlesEvent.subscribe((articles: Article[]) => {
-      this.userArticles = articles;
+    this.articleService.getArticlesEvent.subscribe((articles: Article[]) => {
+      this.userArticles = this.articleService.getArticles();
     });
 
-    this.userArticles = this.userService.getUserArticles();
+    this.userArticles = this.articleService.getArticles();
   }
 
 }

@@ -15,8 +15,6 @@ export class UserService {
 
   public user: User = new User(0, '', '', '', 1, '', '', [], []);
   public userChanged = new EventEmitter<User>()
-  public userArticlesEvent = new EventEmitter<Article[]>();
-  public userArticles: Article[] = [];
 
   constructor(
     private authService: AuthService,
@@ -31,10 +29,6 @@ export class UserService {
 
   getUser() {
     return this.user;
-  }
-
-  getUserArticles() {
-    return this.userArticles;
   }
 
   fetchUser(id: number) {
@@ -62,19 +56,5 @@ export class UserService {
           );
         })
       );
-  }
-
-  fetchUserArticles(id: string) {
-    const options = new RequestOptions({ headers: this.authHeaders });
-
-    return this.http.get(FETCH_USER_ARTICLES.replace(':userID', id), options)
-      .map((response: Response) => response.json())
-      .subscribe(
-        ((response) => {
-          if (response.hasOwnProperty('success') && response.success) {
-            this.userArticlesEvent.emit(response.data.articles);
-            this.userArticles = response.data.articles;
-          }
-        }));
   }
 }

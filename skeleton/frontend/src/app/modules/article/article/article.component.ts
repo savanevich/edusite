@@ -1,9 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { MatDialog } from '@angular/material';
+
 import { Article } from '../article';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../user/user';
+import { DialogComponent } from '../../common/dialog/dialog.component';
+import { ArticleService } from '../article.service';
 
 @Component({
   selector: 'app-article',
@@ -16,8 +20,10 @@ export class ArticleComponent implements OnInit {
   public authenticatedUser: User;
 
   constructor(
+    public dialog: MatDialog,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private articleService: ArticleService
   ) { }
 
   ngOnInit() {
@@ -36,6 +42,17 @@ export class ArticleComponent implements OnInit {
   }
 
   onDelete() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: 'Delete the article',
+        content: 'Are you sure you want to delete the article?'
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.articleService.removeArticle(this.article);
+      }
+    });
   }
 }

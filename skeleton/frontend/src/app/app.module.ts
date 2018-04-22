@@ -4,7 +4,9 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgProgressModule } from 'ngx-progressbar';
+import { MatDialogModule, MatButtonModule } from '@angular/material';
 
 import { ROUTES } from './routes';
 
@@ -29,6 +31,7 @@ import { CreateArticleComponent } from './modules/article/create-article/create-
 import { ArticleService } from './modules/article/article.service';
 import { CategoryService } from './modules/category/category.service';
 import { ArticleComponent } from './modules/article/article/article.component';
+import { DialogComponent } from './modules/common/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { ArticleComponent } from './modules/article/article/article.component';
     ArticleComponent,
     CreateArticleComponent,
     DashboardComponent,
+    DialogComponent,
     EditProfileComponent,
     FollowComponent,
     LoginComponent,
@@ -44,13 +48,19 @@ import { ArticleComponent } from './modules/article/article/article.component';
     RegisterComponent,
     WallComponent
   ],
+  entryComponents: [
+    DialogComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES),
-    NgProgressModule
+    NgProgressModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [
     ArticleService,

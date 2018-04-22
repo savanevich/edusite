@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
     this.articleService.fetchArticles();
 
     this.articleService.getArticlesEvent.subscribe((articles: Article[]) => {
-      this.articles = articles;
+      this.articles = this.articleService.getArticles();
     });
   }
 
