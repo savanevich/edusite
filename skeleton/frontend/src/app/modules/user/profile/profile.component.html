@@ -23,5 +23,46 @@
 </div>
 
 <div class="col-lg-8">
+
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link
+       [routerLink]="['/users', userId]"
+       [routerLinkActiveOptions]="{ exact: true }"
+       routerLinkActive
+       #rla="routerLinkActive"
+       [active]="activeLinkIndex === 1"
+       (click)="activeLinkIndex = 1"
+    >
+      Articles
+    </a>
+    <a mat-tab-link
+       routerLink="skills"
+       routerLinkActive
+       #rla="routerLinkActive"
+       [active]="activeLinkIndex === 2"
+       (click)="activeLinkIndex = 2"
+    >
+      Courses
+    </a>
+    <a mat-tab-link
+       routerLink="skills"
+       routerLinkActive
+       #rla="routerLinkActive"
+       [active]="activeLinkIndex === 3"
+       (click)="activeLinkIndex = 3"
+    >
+      Skills
+    </a>
+    <a mat-tab-link
+       routerLink="edit"
+       routerLinkActive
+       #rla="routerLinkActive"
+       [active]="activeLinkIndex === 4"
+       (click)="activeLinkIndex = 4"
+    >
+      About
+    </a>
+  </nav>
+  <br>
   <router-outlet></router-outlet>
 </div>

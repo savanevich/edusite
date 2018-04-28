@@ -4,7 +4,7 @@ import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { AuthService } from '../../../auth/auth.service';
 import { FOLLOW_USER, UNFOLLOW_USER } from './follow.constants';
 import { User } from './../../user';
-import { NotificationService } from '../../../notification/notification.service';
+import { NotificationService } from '../../../common/notification/notification.service';
 
 @Injectable()
 export class FollowService {

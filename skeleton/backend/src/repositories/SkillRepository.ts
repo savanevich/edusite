@@ -40,7 +40,9 @@ class SkillRepository extends BaseRepository {
 
         return repository
             .createQueryBuilder('skill')
-            .select(['skill.id', 'skill.level', 'skill.description', 'skill.abilityId', 'skill.userId'])
+            .select(['skill.id', 'skill.level', 'skill.description', 'skill.userId'])
+            .leftJoinAndSelect('skill.ability', 'ability')
+            .leftJoinAndSelect('ability.category', 'category')
             .where('skill.userId = :userID',
                 { userID })
             .getMany();

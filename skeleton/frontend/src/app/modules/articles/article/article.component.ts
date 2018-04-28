@@ -38,7 +38,7 @@ export class ArticleComponent implements OnInit {
   }
 
   onEdit() {
-    this.router.navigate(['/article/', this.article.id, 'edit'])
+    this.router.navigate(['/articles/', this.article.id, 'edit'])
   }
 
   onDelete() {

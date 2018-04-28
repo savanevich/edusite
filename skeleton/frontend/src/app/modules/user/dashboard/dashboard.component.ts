@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ArticleService } from '../article/article.service';
-import { Article } from '../article/article';
+import { ArticleService } from '../../articles/article.service';
+import { Article } from '../../articles/article';
 
 @Component({
   selector: 'app-dashboard',

@@ -1,20 +1,23 @@
 import { RegisterComponent } from './modules/auth/register/register.component';
-import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { DashboardComponent } from './modules/user/dashboard/dashboard.component';
 import { LoginComponent } from './modules/auth/login/login.component';
 import { AuthGuard } from './modules/auth/auth.guard';
 import { AuthedGuard } from './modules/auth/authed.guard';
 import { ProfileComponent } from './modules/user/profile/profile.component';
-import { WallComponent } from './modules/user/profile/wall/wall.component';
+import { ArticlesComponent } from './modules/user/profile/articles/articles.component';
 import { EditProfileComponent } from './modules/user/profile/edit/edit.component';
-import { CreateArticleComponent } from './modules/article/create-article/create-article.component';
+import { CreateArticleComponent } from './modules/articles/create-article/create-article.component';
+import { SkillsProfileComponent } from './modules/user/profile/skills/skills.component';
 
 export const ROUTES = [
   { path: 'auth/register', component: RegisterComponent, canActivate: [AuthedGuard] },
   { path: 'auth/login', component: LoginComponent, canActivate: [AuthedGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'users/profile/:id', component: ProfileComponent, canActivate: [AuthGuard], children: [
-    { path: '', component: WallComponent }, { path: 'edit', component: EditProfileComponent }
+  { path: 'users/:id', component: ProfileComponent, canActivate: [AuthGuard], children: [
+    { path: '', component: ArticlesComponent },
+    { path: 'edit', component: EditProfileComponent },
+    { path: 'skills', component: SkillsProfileComponent }
   ]},
-  { path: 'article/create', component: CreateArticleComponent },
-  { path: 'article/:id/edit', component: CreateArticleComponent }
+  { path: 'articles/create', component: CreateArticleComponent },
+  { path: 'articles/:id/edit', component: CreateArticleComponent }
 ];
