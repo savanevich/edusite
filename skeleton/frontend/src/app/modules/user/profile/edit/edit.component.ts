@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import  {User } from "../../user";
-import {AuthService} from "../../../auth/auth.service";
+import { User } from '../../user';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-edit',

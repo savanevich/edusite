@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { ArticleService } from '../article.service';
-import { CategoryService } from '../../category/category.service';
-import { Category } from '../../category/category';
+import { CategoryService } from '../../categories/category.service';
+import { Category } from '../../categories/category';
 import { Article } from '../article';
 
 @Component({

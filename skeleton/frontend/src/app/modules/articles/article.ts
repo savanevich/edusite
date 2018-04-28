@@ -1,5 +1,5 @@
 import { User } from '../user/user';
-import { Category } from "../category/category";
+import { Category } from "../categories/category";
 
 export class Article {
   constructor(

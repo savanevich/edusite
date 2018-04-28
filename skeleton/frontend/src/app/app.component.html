@@ -9,8 +9,8 @@
     <div>
       <ul class="nav navbar-nav">
         <li><a routerLink="/dashboard">Dashboard</a></li>
-        <li *ngIf="isLoggedIn() && authenticatedUser"><a role="button" routerLink="/article/create">Create Article</a></li>
-        <li *ngIf="isLoggedIn() && authenticatedUser"><a role="button" [routerLink]="['users/profile', authenticatedUser.id]">My Profile</a></li>
+        <li *ngIf="isLoggedIn() && authenticatedUser"><a role="button" routerLink="/articles/create">Create Article</a></li>
+        <li *ngIf="isLoggedIn() && authenticatedUser"><a role="button" [routerLink]="['users', authenticatedUser.id]">My Profile</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -22,7 +22,7 @@
   </div>
 </nav>
 
-<div class="container">
+<div class="container main-container">
   <app-notification></app-notification>
   <router-outlet></router-outlet>
 </div>

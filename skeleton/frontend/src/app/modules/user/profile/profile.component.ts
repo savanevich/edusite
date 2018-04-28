@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
 
   public userId: number;
   public user: User;
+  public activeLinkIndex: number = 1;
 
   constructor(
     private router: ActivatedRoute,

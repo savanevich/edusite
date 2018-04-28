@@ -10,7 +10,7 @@ import {
   UPDATE_ARTICLE_URL,
   DELETE_ARTICLE_URL
 } from './article.constants';
-import { NotificationService } from '../notification/notification.service';
+import { NotificationService } from '../common/notification/notification.service';
 import { NgProgress } from 'ngx-progressbar';
 import { Article } from './article';
 import { FETCH_USER_ARTICLES } from '../user/user.constants';

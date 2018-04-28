@@ -6,7 +6,7 @@ import { NgProgress } from 'ngx-progressbar';
 import { REGISTER_URL, LOGIN_URL, FETCH_AUTH_USER, UPDATE_AUTH_USER } from './auth.constants';
 import { Registrant } from './register/registrant';
 import { Router } from '@angular/router';
-import { NotificationService } from '../notification/notification.service';
+import { NotificationService } from '../common/notification/notification.service';
 import { User} from '../user/user';
 
 @Injectable()
