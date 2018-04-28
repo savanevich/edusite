@@ -10,7 +10,7 @@
     "migrations-create": "ts-node node_modules/.bin/typeorm migrations:create -n",
     "migrations-run": "ts-node node_modules/.bin/typeorm migrations:run",
     "migrations-revert": "ts-node node_modules/.bin/typeorm migrations:revert",
-    "apidoc": "apidoc -i src/ -o static-files/api-doc"
+    "apidoc": "apidoc -i src/ -o public/api-doc"
   },
   "pre-commit": [
     "lint"

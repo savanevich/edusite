@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { FailedJsonResponse, SuccessJsonResponse } from '../utils/Responses';
 import AbilityService from '../services/AbilityService';
+import Ability from "../entities/Ability";
 
 class AbilityController {
 
@@ -53,7 +54,7 @@ class AbilityController {
     }
 
     /**
-     * @api {get} /abilities Get abilities
+     * @api {get} /api/v1/abilities Get abilities
      * @apiName Get abilities
      * @apiGroup Abilities
      *
@@ -93,7 +94,14 @@ class AbilityController {
      */
     public static async getAbilities(request: Request, response: Response): Promise<any> {
         try {
-            const abilities = await AbilityService.getAbilities();
+            const search = request.query.search;
+            let abilities;
+
+            if (search) {
+                abilities = await AbilityService.searchByName(search);
+            } else {
+                abilities = await AbilityService.getAbilities();
+            }
 
             const successJsonResponse = new SuccessJsonResponse(200, { abilities });
             successJsonResponse.send(response);

@@ -4,6 +4,7 @@ export interface CreateArticleRequest {
     content: string;
     coverUrl: string;
     categoryID: number;
+    abilities: string[];
 }
 
 export interface UpdateArticleRequest {
@@ -11,4 +12,5 @@ export interface UpdateArticleRequest {
     preview?: string;
     content?: string;
     categoryID: number;
+    abilities: string[];
 }

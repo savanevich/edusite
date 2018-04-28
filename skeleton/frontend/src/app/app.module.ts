@@ -8,6 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgProgressModule } from 'ngx-progressbar';
 import { MatDialogModule, MatButtonModule, MatTabsModule } from '@angular/material';
 import { ProgressBarModule } from 'angular-progress-bar';
+import { TagInputModule } from 'ngx-chips';
+
 
 import { ROUTES } from './routes';
 
@@ -65,7 +67,8 @@ import { SkillsProfileComponent } from './modules/user/profile/skills/skills.com
     MatDialogModule,
     MatButtonModule,
     MatTabsModule,
-    ProgressBarModule
+    ProgressBarModule,
+    TagInputModule
   ],
   providers: [
     ArticleService,

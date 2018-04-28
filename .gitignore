@@ -1,6 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 /skeleton/backend/npm-debug.log
 /skeleton/backend/static-files/api-doc/
+/skeleton/backend/public/api-doc/
 /skeleton/backend/node_modules/
 /skeleton/backend/logs/
 /skeleton/backend/tmp/

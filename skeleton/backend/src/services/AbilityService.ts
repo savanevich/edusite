@@ -29,6 +29,10 @@ class AbilityService {
         return AbilityRepository.findByCategory(category);
     }
 
+    public async searchByName(name: string): Promise<Ability[] | undefined> {
+        return AbilityRepository.searchByName(name);
+    }
+
     public async getOrCreateAbility(abilityName: string, categoryID: number): Promise<Ability> {
         const category = await CategoryRepository.findOneById(categoryID);
 

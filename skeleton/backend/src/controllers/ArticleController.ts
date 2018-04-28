@@ -6,7 +6,7 @@ import ArticleService from '../services/ArticleService';
 class ArticleController {
 
     /**
-     * @api {get} /articles/:articleID Get article by ID
+     * @api {get} /api/v1/articles/:articleID Get article by ID
      * @apiName Get Article
      * @apiGroup Articles
      *
@@ -62,7 +62,7 @@ class ArticleController {
     }
 
     /**
-     * @api {get} /articles Get articles
+     * @api {get} /api/v1/articles Get articles
      * @apiName Get articles
      * @apiGroup Articles
      *
@@ -136,7 +136,7 @@ class ArticleController {
     }
 
     /**
-     * @api {post} /articles Create new article
+     * @api {post} /api/v1/articles Create new article
      * @apiName articles
      * @apiGroup Articles
      *
@@ -186,7 +186,7 @@ class ArticleController {
      */
     public static async addArticle(request: Request, response: Response): Promise<any> {
         try {
-            const article = await ArticleService.createArticle(request.body, response.locals.user, response.locals.category);
+            const article = await ArticleService.createArticle(request.body, response.locals.user, response.locals.category, response.locals.abilities);
 
             const successJsonResponse = new SuccessJsonResponse(201, { article });
             successJsonResponse.send(response);
@@ -198,7 +198,7 @@ class ArticleController {
     }
 
     /**
-     * @api {put} /articles/:articleID Update the information of the article
+     * @api {put} /api/v1/articles/:articleID Update the information of the article
      * @apiName Update
      * @apiGroup Articles
      *
@@ -247,7 +247,7 @@ class ArticleController {
      */
     public static async updateArticle(request: Request, response: Response): Promise<any> {
         try {
-            const article = await ArticleService.updateArticle(response.locals.article, response.locals.category, request.body);
+            const article = await ArticleService.updateArticle(response.locals.article, response.locals.category, response.locals.abilities, request.body);
 
             const successJsonResponse = new SuccessJsonResponse(200, { article });
             successJsonResponse.send(response);
@@ -259,7 +259,7 @@ class ArticleController {
     }
 
     /**
-     * @api {delete} /articles/:articleID Remove the article by id
+     * @api {delete} /api/v1/articles/:articleID Remove the article by id
      * @apiName Delete
      * @apiGroup Articles
      *
@@ -295,7 +295,7 @@ class ArticleController {
     }
 
     /**
-     * @api {get} /articles/category/:articleID Get articles by category
+     * @api {get} /api/v1/articles/category/:articleID Get articles by category
      * @apiName Get articles by category
      * @apiGroup Articles
      *
@@ -369,7 +369,7 @@ class ArticleController {
     }
 
     /**
-     * @api {get} /users/:userID/articles Get articles by user
+     * @api {get} /api/v1/users/:userID/articles Get articles by user
      * @apiName Get articles by user
      * @apiGroup Articles
      *

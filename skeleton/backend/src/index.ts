@@ -25,7 +25,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-app.use(router);
+app.use(express.static('public'));
+app.use('/api/v1', router);
 app.use(ErrorHandler.handle);
 
 server.listen(globalConfig.serverPort, () => {

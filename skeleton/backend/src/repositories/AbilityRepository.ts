@@ -77,6 +77,16 @@ class AbilityRepository extends BaseRepository {
             .getMany();
     }
 
+    public async searchByName(name: string): Promise<Ability[]>  {
+        const repository = await this.getRepository();
+
+        return repository
+            .createQueryBuilder('ability')
+            .select(['ability.id', 'ability.name'])
+            .where('ability.name LIKE :name', { name: `%${name}%` })
+            .getMany();
+    }
+
     public async remove(ability: Ability): Promise<Ability> {
         const repository = await this.getRepository();
 

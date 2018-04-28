@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Response } from '@angular/http';
 
 import { ArticleService } from '../article.service';
 import { CategoryService } from '../../categories/category.service';
@@ -31,8 +33,7 @@ export class CreateArticleComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private articleService: ArticleService,
-    private categoryService: CategoryService,
-    private router: Router
+    private categoryService: CategoryService
   ) {
   }
 
@@ -71,17 +72,52 @@ export class CreateArticleComponent implements OnInit {
     );
   }
 
+  public onSubmit() {
+    const abilities = this.articleForm.value.abilities.map(ability => ability.value);
+
+    const article = new Article(
+      this.articleForm.value.title,
+      this.articleForm.value.preview,
+      this.articleForm.value.content,
+      this.articleForm.value.categoryID,
+      null,
+      null,
+      null,
+      null,
+      abilities
+    );
+
+    if (this.isNew) {
+      this.articleService.createArticle(article);
+
+      this.articleForm.reset();
+    } else {
+      this.articleService.updateArticle(this.articleID, article)
+    }
+  }
+
+  public requestAutoCompleteAbilities = (text: string): Observable<Response> => {
+    return this.articleService.searchByAbilityName(text);
+  };
+
   private initForm() {
     let title = '';
     let preview = '';
     let content = '';
     let categoryID = 0;
+    let abilities = [];
 
     if (!this.isNew && this.article) {
       title = this.article.title;
       preview = this.article.preview;
       content = this.article.content;
       categoryID = this.article.category.id;
+      abilities = this.article.abilities.map(ability => {
+        return {
+          value: ability.name,
+          display: ability.name
+        }
+      })
     }
 
     this.articleForm = this.formBuilder.group({
@@ -98,17 +134,8 @@ export class CreateArticleComponent implements OnInit {
       ]],
       categoryID: [categoryID, [
         Validators.required
-      ]]
+      ]],
+      abilities: [abilities]
     });
-  }
-
-  onSubmit() {
-    if (this.isNew) {
-      this.articleService.createArticle(this.articleForm.value);
-
-      this.articleForm.reset();
-    } else {
-      this.articleService.updateArticle(this.articleID, this.articleForm.value)
-    }
   }
 }

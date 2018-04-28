@@ -4,6 +4,7 @@ import { CreateArticleRequest } from '../interfaces/ArticleRequests';
 import Category from "../entities/Category";
 import EntityNotFoundError from '../errors/EntityNotFoundError';
 import User from "../entities/User";
+import Ability from "../entities/Ability";
 
 class ArticleService {
 
@@ -39,13 +40,13 @@ class ArticleService {
         return ArticleRepository.findByUser(user.id);
     }
 
-    public async createArticle(data: CreateArticleRequest, user: User, category: Category): Promise<Article> {
-        const ability: Article = await Article.create(data, user, category);
+    public async createArticle(data: CreateArticleRequest, user: User, category: Category, abilities: Ability[]): Promise<Article> {
+        const ability: Article = await Article.create(data, user, category, abilities);
 
         return ArticleRepository.save(ability);
     }
 
-    public async updateArticle(currentArticle: Article, category: Category, data: any): Promise<Article> {
+    public async updateArticle(currentArticle: Article, category: Category, abilities: Ability[], data: any): Promise<Article> {
         if (data.title) {
             currentArticle.title = data.title;
         }
@@ -56,6 +57,7 @@ class ArticleService {
             currentArticle.content = data.content;
         }
         currentArticle.category = category;
+        currentArticle.abilities = abilities;
 
         await ArticleRepository.save(currentArticle);
 

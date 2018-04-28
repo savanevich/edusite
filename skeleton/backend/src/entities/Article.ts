@@ -1,9 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 
 import Category from './Category';
 import User from './User';
 import Comment from './Comment';
 import { CreateArticleRequest } from '../interfaces/ArticleRequests';
+import Ability from "./Ability";
+import AbilityService from "../services/AbilityService";
 
 @Entity('articles')
 export default class Article {
@@ -57,10 +59,14 @@ export default class Article {
     @ManyToOne(type => Category, category => category.articles)
     public category: Category;
 
+    @ManyToMany(type => Ability)
+    @JoinTable()
+    abilities: Ability[];
+
     @OneToMany(type => Comment, comment => comment.article)
     public comments: Comment[];
 
-    public static create(data: CreateArticleRequest, user: User, category: Category): Article {
+    public static create(data: CreateArticleRequest, user: User, category: Category, abilities: Ability[]): Article {
         const article = new Article();
 
         article.title = data.title;
@@ -69,6 +75,7 @@ export default class Article {
         article.coverUrl = data.coverUrl;
         article.user = user;
         article.category = category;
+        article.abilities = abilities;
 
         return article;
     }

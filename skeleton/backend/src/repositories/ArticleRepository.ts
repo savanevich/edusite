@@ -45,6 +45,7 @@ class ArticleRepository extends BaseRepository {
             .select(ArticleRepository.SELECT_ROWS)
             .leftJoinAndSelect('article.category', 'category')
             .leftJoinAndSelect('article.user', 'user')
+            .leftJoinAndSelect('article.abilities', 'abilities')
             .where('article.id = :id AND article.deleted = 0', { id })
             .getOne();
 

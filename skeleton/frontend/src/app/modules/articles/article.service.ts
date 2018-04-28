@@ -5,15 +5,17 @@ import 'rxjs/add/operator/finally';
 import { AuthService } from '../auth/auth.service';
 import {
   CREATE_ARTICLE_URL,
-  GET_USER_WALL,
-  FETCH_ARTICLE,
+  GET_ARTICLES_URL,
+  GET_ARTICLE_URL,
   UPDATE_ARTICLE_URL,
-  DELETE_ARTICLE_URL
+  DELETE_ARTICLE_URL,
+  GET_ABILITIES_URL
 } from './article.constants';
 import { NotificationService } from '../common/notification/notification.service';
 import { NgProgress } from 'ngx-progressbar';
 import { Article } from './article';
 import { FETCH_USER_ARTICLES } from '../user/user.constants';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ArticleService {
@@ -46,7 +48,7 @@ export class ArticleService {
   fetchArticle(id: number) {
     const options = new RequestOptions({ headers: new Headers({'Content-type': 'application/json'}) });
 
-    return this.http.get(FETCH_ARTICLE.replace(':id', id.toString()), options)
+    return this.http.get(GET_ARTICLE_URL.replace(':id', id.toString()), options)
       .map((response: Response) => response.json())
       .subscribe(
         ((response) => {
@@ -60,7 +62,7 @@ export class ArticleService {
   fetchArticles() {
     const options = new RequestOptions({ headers: this.authHeaders });
 
-    return this.http.get(GET_USER_WALL, options)
+    return this.http.get(GET_ARTICLES_URL, options)
       .map((response: Response) => response.json())
       .subscribe(
         ((response) => {
@@ -69,6 +71,15 @@ export class ArticleService {
             this.getArticlesEvent.emit(response.data.articles);
           }
         }));
+  }
+
+  searchByAbilityName(name: string) {
+    const options = new RequestOptions({ headers: this.authHeaders, params: { search: name } });
+
+    return this.http.get(`${GET_ABILITIES_URL}`, options)
+      .pipe(map((data) => {
+        return data.json().data.abilities.map(item => item.name)
+      }));
   }
 
   fetchUserArticles(id: string) {
@@ -91,7 +102,8 @@ export class ArticleService {
       title: article.title,
       preview: article.preview,
       content: article.content,
-      categoryID: article.categoryID
+      categoryID: article.categoryID,
+      abilities: article.abilities
     };
     this.progress.start();
 
@@ -119,7 +131,8 @@ export class ArticleService {
       title: article.title,
       preview: article.preview,
       content: article.content,
-      categoryID: article.categoryID
+      categoryID: article.categoryID,
+      abilities: article.abilities
     };
     this.progress.start();
 

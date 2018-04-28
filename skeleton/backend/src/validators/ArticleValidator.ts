@@ -8,7 +8,8 @@ export function validateArticleCreate(data: CreateArticleRequest): Joi.Validatio
         preview: Joi.string().required(),
         content: Joi.string().required(),
         coverUrl: Joi.string(),
-        categoryID: Joi.number().required()
+        categoryID: Joi.number().required(),
+        abilities: Joi.array()
     });
 
     const { error } = Joi.validate(data, schema);
@@ -22,7 +23,8 @@ export function validateArticleUpdate(data: UpdateArticleRequest): Joi.Validatio
         preview: Joi.string(),
         content: Joi.string(),
         coverUrl: Joi.string(),
-        categoryID: Joi.number().required()
+        categoryID: Joi.number().required(),
+        abilities: Joi.array()
     });
 
     const { error } = Joi.validate(data, schema);

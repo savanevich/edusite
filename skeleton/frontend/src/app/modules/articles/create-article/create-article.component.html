@@ -48,6 +48,25 @@
               <option *ngFor="let category of categoriesData" [ngValue]="category.id">{{category.name}}</option>
             </select>
           </div>
+          <div class="form-group">
+            <label>Article tags</label>
+            <tag-input formControlName="abilities"
+                       [placeholder]="'Enter a new skill'"
+                       [maxItems]="5"
+                       [inputClass]="form-control"
+                       theme='bootstrap'
+                       [onTextChangeDebounce]="500"
+                       [onlyFromAutocomplete]="true">
+              <tag-input-dropdown
+                [showDropdownIfEmpty]="true"
+                [autocompleteObservable]="requestAutoCompleteAbilities"
+                [minimumTextLength]="3">
+                <ng-template let-item="item" let-index="index">
+                  {{ item.display }}
+                </ng-template>
+              </tag-input-dropdown>
+            </tag-input>
+          </div>
           <div class="form-group text-center">
             <button class="btn btn-info" [disabled]="articleForm.invalid">
               <span *ngIf="isNew">Create Article</span>
