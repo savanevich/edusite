@@ -1,0 +1,11 @@
+<div>
+  <span *ngIf="isCommentCanBeModified()" class="delete-comment"><a (click)="onDelete()">X</a></span>
+  <div class="vcard bio user-avatar">
+    <img [src]="staticUrl + '/images/person_1.jpg'" alt="Image placeholder">
+  </div>
+  <div class="comment-body">
+    <h3><a [routerLink]="['/users/profile', (comment?.user.id || 0)]">{{ comment?.user.name }}</a></h3>
+    <div class="meta">{{ comment?.createdAt | date:'medium' }}</div>
+    <p>{{ comment?.body }}</p>
+  </div>
+</div>

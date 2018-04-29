@@ -13,7 +13,8 @@ class CommentRepository extends BaseRepository {
         'comment.body',
         'comment.deleted',
         'comment.userId',
-        'comment.articleId'
+        'comment.articleId',
+        'comment.user'
     ];
 
     private async getRepository(): Promise<Repository<Comment>> {

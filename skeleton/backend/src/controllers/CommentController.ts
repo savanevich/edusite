@@ -6,7 +6,7 @@ import CommentService from '../services/CommentService';
 class CommentController {
 
     /**
-     * @api {get} /articles/:articleID/comments Get comments
+     * @api {get} /api/v1/articles/:articleID/comments Get comments
      * @apiName Get comments for the article
      * @apiGroup Comments
      *
@@ -64,7 +64,7 @@ class CommentController {
     }
 
     /**
-     * @api {post} /articles/:articleID/comments Add a comment to the post
+     * @api {post} /api/v1/articles/:articleID/comments Add a comment to the post
      * @apiName comments
      * @apiGroup Comments
      *
@@ -77,7 +77,7 @@ class CommentController {
      *     "statusCode": "201",
      *     "success": "true",
      *     "data": {
-     *       "article" : {
+     *       "comment" : {
      *          "id": 1,
      *          "body": "Nice Article!",
      *          "user" : {
@@ -114,7 +114,7 @@ class CommentController {
     }
 
     /**
-     * @api {put} articles/:articleID/comments/:commentID Update the body of the comment
+     * @api {put} /api/v1/articles/:articleID/comments/:commentID Update the body of the comment
      * @apiName Update the comment
      * @apiGroup Users
      *
@@ -161,7 +161,7 @@ class CommentController {
     }
 
     /**
-     * @api {delete} articles/:articleID/comments/:commentID Remove the comment by id
+     * @api {delete} /api/v1/articles/:articleID/comments/:commentID Remove the comment by id
      * @apiName Delete
      * @apiGroup Comments
      *

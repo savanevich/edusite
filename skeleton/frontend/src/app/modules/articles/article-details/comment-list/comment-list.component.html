@@ -1,0 +1,10 @@
+<div>
+  <h3 class="comments-number">{{ comments?.length || 'No' }} Comments</h3>
+  <ul class="comment-list">
+    <li class="comment" *ngFor="let comment of comments">
+      <app-comment [comment]="comment"></app-comment>
+    </li>
+  </ul>
+
+  <app-create-comment></app-create-comment>
+</div>

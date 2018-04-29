@@ -9,11 +9,14 @@ import {
   GET_ARTICLE_URL,
   UPDATE_ARTICLE_URL,
   DELETE_ARTICLE_URL,
-  GET_ABILITIES_URL
+  GET_ABILITIES_URL,
+  POST_COMMENT_TO_ARTICLE_URL,
+  DELETE_COMMENT_URL
 } from './article.constants';
 import { NotificationService } from '../common/notification/notification.service';
 import { NgProgress } from 'ngx-progressbar';
 import { Article } from './article';
+import { Comment } from './comment';
 import { FETCH_USER_ARTICLES } from '../user/user.constants';
 import { map } from 'rxjs/operators';
 
@@ -183,6 +186,55 @@ export class ArticleService {
         }), ((response) => {
           this.notificationService.notify(
             'Failed removed the article.',
+            'error'
+          );
+        })
+      );
+  }
+
+  addCommentToArticle(comment: string, articleId: number) {
+    const options = new RequestOptions({ headers: this.authHeaders });
+    this.progress.start();
+
+    const body = {
+      body: comment
+    };
+
+    return this.http.post(POST_COMMENT_TO_ARTICLE_URL.replace(':id', articleId.toString()), body, options)
+      .map((response: Response) => response.json())
+      .finally(() => this.progress.done())
+      .subscribe(
+        ((response) => {
+          if (response.hasOwnProperty('success') && response.success) {
+            this.article.comments.push(response.data.comment);
+          }
+        }), ((response) => {
+          this.notificationService.notify(
+            'Failed added the comment.',
+            'error'
+          );
+        })
+      );
+  }
+
+  removeComment(comment: Comment, articleId: number) {
+    const options = new RequestOptions({ headers: this.authHeaders });
+    const id = comment.id;
+
+    this.progress.start();
+
+    return this.http.delete(DELETE_COMMENT_URL.replace(':articleId', articleId.toString()).replace(':commentId', id.toString()), options)
+      .map((response: Response) => response.json())
+      .finally(() => this.progress.done())
+      .subscribe(
+        ((response) => {
+          if (response.hasOwnProperty('success') && response.success) {
+            const commentIndex = this.article.comments.indexOf(comment);
+            this.article.comments.splice(commentIndex, 1);
+          }
+        }), ((response) => {
+          this.notificationService.notify(
+            'Failed removed the comment.',
             'error'
           );
         })

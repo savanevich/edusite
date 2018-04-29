@@ -1,0 +1,13 @@
+.comment-body h3 a {
+  color: black;
+}
+
+.user-avatar {
+  margin-top: 30px;
+}
+
+.delete-comment {
+  padding-right: 30px;
+  cursor: pointer;
+  float: right;
+}

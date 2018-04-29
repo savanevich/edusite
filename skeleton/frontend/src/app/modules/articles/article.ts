@@ -12,7 +12,8 @@ export class Article {
     public coverUrl?: number,
     public user?: User,
     public category?: Category,
-    public abilities?: Ability[]
+    public abilities?: Ability[],
+    public comments?: any[]
   ) {
   }
 }

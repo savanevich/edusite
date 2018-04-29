@@ -39,6 +39,9 @@ import { SkillsProfileComponent } from './modules/user/profile/skills/skills.com
 import { ArticleDetailsComponent } from './modules/articles/article-details/article-details.component';
 import { FooterComponent } from './modules/common/footer/footer.component';
 import { SidebarComponent } from './modules/articles/article-details/sidebar/sidebar.component';
+import { CommentListComponent } from './modules/articles/article-details/comment-list/comment-list.component';
+import { CommentComponent } from './modules/articles/article-details/comment-list/comment/comment.component';
+import { CreateCommentComponent } from './modules/articles/article-details/comment-list/create-comment/create-comment.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import { SidebarComponent } from './modules/articles/article-details/sidebar/sid
     ArticleComponent,
     ArticleDetailsComponent,
     ArticlesComponent,
+    CommentComponent,
+    CommentListComponent,
     CreateArticleComponent,
+    CreateCommentComponent,
     DashboardComponent,
     DialogComponent,
     EditProfileComponent,
@@ -56,8 +62,8 @@ import { SidebarComponent } from './modules/articles/article-details/sidebar/sid
     NotificationComponent,
     ProfileComponent,
     RegisterComponent,
-    SidebarComponent,
-    SkillsProfileComponent
+    SkillsProfileComponent,
+    SidebarComponent
   ],
   entryComponents: [
     DialogComponent

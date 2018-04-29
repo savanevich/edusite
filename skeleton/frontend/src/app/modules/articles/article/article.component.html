@@ -15,7 +15,7 @@
     {{ article.createdAt | date:'longDate'}}
     <span *ngIf="isArticleCanBeModified()">
       <button class="pull-right" mat-raised-button color="primary" (click)="onEdit()">Edit</button>
-      <button class="pull-right" mat-raised-button color="warn"  (click)="onDelete()">Delete</button>
+      <button class="pull-right" mat-raised-button color="warn" (click)="onDelete()">Delete</button>
     </span>
   </div>
 </div>
