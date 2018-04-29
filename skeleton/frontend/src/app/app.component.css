@@ -1,5 +1,7 @@
-@media (min-width: 1200px) {
-  .main-container {
-    width: 1350px;
-  }
+.main-container {
+  background-color: white;
+}
+
+.navbar {
+  margin-bottom: 0;
 }

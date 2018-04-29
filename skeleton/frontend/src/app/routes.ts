@@ -8,6 +8,7 @@ import { ArticlesComponent } from './modules/user/profile/articles/articles.comp
 import { EditProfileComponent } from './modules/user/profile/edit/edit.component';
 import { CreateArticleComponent } from './modules/articles/create-article/create-article.component';
 import { SkillsProfileComponent } from './modules/user/profile/skills/skills.component';
+import { ArticleDetailsComponent } from './modules/articles/article-details/article-details.component';
 
 export const ROUTES = [
   { path: 'auth/register', component: RegisterComponent, canActivate: [AuthedGuard] },
@@ -19,5 +20,6 @@ export const ROUTES = [
     { path: 'skills', component: SkillsProfileComponent }
   ]},
   { path: 'articles/create', component: CreateArticleComponent },
-  { path: 'articles/:id/edit', component: CreateArticleComponent }
+  { path: 'articles/:id/edit', component: CreateArticleComponent },
+  { path: 'articles/:id', component: ArticleDetailsComponent }
 ];

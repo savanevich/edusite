@@ -36,21 +36,27 @@ import { CategoryService } from './modules/categories/category.service';
 import { ArticleComponent } from './modules/articles/article/article.component';
 import { DialogComponent } from './modules/common/dialog/dialog.component';
 import { SkillsProfileComponent } from './modules/user/profile/skills/skills.component';
+import { ArticleDetailsComponent } from './modules/articles/article-details/article-details.component';
+import { FooterComponent } from './modules/common/footer/footer.component';
+import { SidebarComponent } from './modules/articles/article-details/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ArticleComponent,
+    ArticleDetailsComponent,
     ArticlesComponent,
     CreateArticleComponent,
     DashboardComponent,
     DialogComponent,
     EditProfileComponent,
     FollowComponent,
+    FooterComponent,
     LoginComponent,
     NotificationComponent,
     ProfileComponent,
     RegisterComponent,
+    SidebarComponent,
     SkillsProfileComponent
   ],
   entryComponents: [

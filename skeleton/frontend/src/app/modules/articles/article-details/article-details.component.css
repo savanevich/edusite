@@ -1,0 +1,11 @@
+.article-details-header {
+  display: flex;
+  height: 100%;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.article-details-title {
+  display: inline-block;
+  align-self: flex-end;
+}

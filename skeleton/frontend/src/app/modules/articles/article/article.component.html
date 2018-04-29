@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <span>{{ article.title }}</span>
+    <span><a [routerLink]="['/articles', article.id]">{{ article.title }}</a></span>
     <span class="pull-right"><a [routerLink]="['/users/profile', article.user.id]">{{ article.user.name }}</a></span>
   </div>
   <div class="panel-body">

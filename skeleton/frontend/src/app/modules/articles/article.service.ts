@@ -45,11 +45,17 @@ export class ArticleService {
     return this.articles;
   }
 
+  getArticle() {
+    return this.article;
+  }
+
   fetchArticle(id: number) {
     const options = new RequestOptions({ headers: new Headers({'Content-type': 'application/json'}) });
+    this.progress.start();
 
     return this.http.get(GET_ARTICLE_URL.replace(':id', id.toString()), options)
       .map((response: Response) => response.json())
+      .finally(() => this.progress.done())
       .subscribe(
         ((response) => {
           if (response.hasOwnProperty('success') && response.success) {
